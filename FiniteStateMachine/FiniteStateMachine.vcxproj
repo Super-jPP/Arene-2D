@@ -138,7 +138,6 @@
   </ItemDefinitionGroup>
   <!-- ================= SOURCES ================= -->
   <ItemGroup>
-    <ClCompile Include="src\ai\fsm\FSM.cpp" />
     <ClCompile Include="src\ai\fsm\IState.hpp" />
     <ClCompile Include="src\ai\states\EnemyAttack.cpp" />
     <ClCompile Include="src\ai\states\EnemyChase.cpp" />
@@ -158,7 +157,7 @@
     <ClCompile Include="src\render\SpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ai\fsm\FSM.h" />
+    <ClInclude Include="src\ai\fsm\FSM.hpp" />
     <ClInclude Include="src\ai\states\EnemyAttack.h" />
     <ClInclude Include="src\ai\states\EnemyChase.h" />
     <ClInclude Include="src\ai\states\EnemyDead.h" />

@@ -1,9 +1,13 @@
 #pragma once
 
 namespace ai::fsm {
+
 	template <typename Owner> 
+
 	class IState {
-	public: 
+
+	public:
+
 		virtual ~IState() = default;
 
 		virtual void onEnter(Owner&) = 0;
