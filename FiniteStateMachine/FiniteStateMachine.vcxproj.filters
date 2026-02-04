@@ -19,35 +19,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="NpcStates\PatrolState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NpcStates\ChaseState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NpcStates\NpcContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NpcStates\Conditions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine\NPC.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine\State.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine\StateMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="StateMachine\State.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="StateMachine\StateMachine.inl">
-      <Filter>Header Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
