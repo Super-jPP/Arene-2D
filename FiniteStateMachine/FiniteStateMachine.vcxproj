@@ -139,7 +139,7 @@
   <!-- ================= SOURCES ================= -->
   <ItemGroup>
     <ClCompile Include="src\ai\fsm\FSM.cpp" />
-    <ClCompile Include="src\ai\fsm\IState.cpp" />
+    <ClCompile Include="src\ai\fsm\IState.hpp" />
     <ClCompile Include="src\ai\states\EnemyAttack.cpp" />
     <ClCompile Include="src\ai\states\EnemyChase.cpp" />
     <ClCompile Include="src\ai\states\EnemyDead.cpp" />
@@ -159,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ai\fsm\FSM.h" />
-    <ClInclude Include="src\ai\fsm\IState.h" />
     <ClInclude Include="src\ai\states\EnemyAttack.h" />
     <ClInclude Include="src\ai\states\EnemyChase.h" />
     <ClInclude Include="src\ai\states\EnemyDead.h" />
@@ -186,6 +185,9 @@
     <ClInclude Include="src\render\DebugDraw.h" />
     <ClInclude Include="src\render\Renderer.h" />
     <ClInclude Include="src\render\SpriteComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docs\ai_contract.md" />
   </ItemGroup>
   <!-- ================= HEADERS ================= -->
   <!-- ================= DOCS ================= -->
