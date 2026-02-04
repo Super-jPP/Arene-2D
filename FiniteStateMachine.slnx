@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="FiniteStateMachine/FiniteStateMachine.vcxproj" Id="46cf4af5-b888-458c-9d1a-e0d940369599" />
+</Solution>
