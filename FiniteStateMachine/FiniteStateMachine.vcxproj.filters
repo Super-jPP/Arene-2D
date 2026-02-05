@@ -42,16 +42,10 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\ai\states\EnemyAttack.cpp">
+    <ClCompile Include="src\ai\states\EnemyAttack.hpp">
       <Filter>src\ai\states</Filter>
     </ClCompile>
     <ClCompile Include="src\ai\states\EnemyChase.hpp">
-      <Filter>src\ai\states</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ai\states\EnemyDead.cpp">
-      <Filter>src\ai\states</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ai\states\EnnemyIdle.cpp">
       <Filter>src\ai\states</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Config.cpp">
@@ -89,16 +83,13 @@
     <ClInclude Include="src\ai\fsm\IState.hpp">
       <Filter>src\ai\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="src\ai\states\EnemyAttack.h">
-      <Filter>src\ai\states</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ai\states\EnemyDead.h">
+    <ClInclude Include="src\ai\states\EnemyDead.hpp">
       <Filter>src\ai\states</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\states\EnemyWander.hpp">
       <Filter>src\ai\states</Filter>
     </ClInclude>
-    <ClInclude Include="src\ai\states\EnnemyIdle.h">
+    <ClInclude Include="src\ai\states\EnnemyIdle.hpp">
       <Filter>src\ai\states</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Config.h">

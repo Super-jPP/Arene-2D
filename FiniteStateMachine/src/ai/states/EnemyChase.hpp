@@ -1,11 +1,15 @@
 #pragma once
 
 #include "ai/fsm/IState.hpp"
-#include "math/vec2.hpp"
+#include "ai/AttackTypes.hpp"
+#include "math/Vec2.hpp"
+
+
 
 template <typename Owner>
 class EnemyWander;
-
+template <typename Owner>
+class EnemyAttack;
 template <typename Owner>
 class EnemyChase : public ai::fsm::IState<Owner>
 {
@@ -24,6 +28,8 @@ public:
     void onEnter(Owner& owner) override
     {
         owner.setDebugStateName("Chase");
+        // facultatif: rend l'état observable visuellement
+        owner.setAnimState("Run");
     }
 
     void onUpdate(Owner& owner, float dt) override
@@ -33,6 +39,19 @@ public:
         if (dist > owner.getStats().lostRadius)
         {
             owner.changeState(EnemyWander<Owner>::instance());
+            return;
+        }
+       
+        if (owner.attackReady() && dist <= owner.getStats().attackRange)
+        {
+            if (dist <= owner.getStats().attackRange * 0.40f)
+                owner.setNextAttackType(AttackType::Heavy);
+            else if (dist <= owner.getStats().attackRange * 0.85f)
+                owner.setNextAttackType(AttackType::Dash);
+            else
+                owner.setNextAttackType(AttackType::Light);
+
+            owner.changeState(EnemyAttack<Owner>::instance());
             return;
         }
 

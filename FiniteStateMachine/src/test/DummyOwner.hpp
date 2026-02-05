@@ -1,5 +1,6 @@
 #pragma once
-#include "math/vec2.hpp"
+#include "math/Vec2.hpp"
+#include "ai/AttackTypes.hpp"
 #include "ai/fsm/FSM.hpp"
 #include "ai/fsm/IState.hpp"
 
@@ -16,8 +17,17 @@ struct MemoireIa {
 	Vec2 wanderDir;
 	float wanderTimer;
 	float spawnTimer;
+
 	bool attackReady;
 	bool didAttackThisFrame;
+
+
+	AttackType attackType = AttackType::Light;
+	AttackPhase attackPhase = AttackPhase::Windup;
+	float phaseTimer = 0.f;
+
+	float attackCooldownTimer = 0.f; 
+	bool hitDone = false;
 };
 
 struct DummyOwner {
@@ -25,9 +35,12 @@ struct DummyOwner {
 	Vec2 playerPos;
 	float hp;
 	Stats stats;
+	// Mémoire interne de l'IA (les states ne doivent pas y accéder directement)
 	MemoireIa memoireIa;
 	std::string debugStateName;
 	ai::fsm::FSM<DummyOwner>* fsm = nullptr;
+	std::string animState;
+
 
 
 	Vec2 getPos() const {
@@ -46,13 +59,39 @@ struct DummyOwner {
 		return stats;
 	};
 
-	bool attackReady() const { 
-		return memoireIa.attackReady; 
-	}
-
-
 	void setDebugStateName(const std::string& name) {
 		debugStateName = name;
+	}
+
+	// ------------------------------------------------------------
+	// Interface Owner "propre" (évite tout accès direct à memoireIa)
+	// ------------------------------------------------------------
+
+	// Wander memory
+	Vec2 getWanderDir() const { return memoireIa.wanderDir; }
+	void setWanderDir(const Vec2& d) { memoireIa.wanderDir = d; }
+	float getWanderTimer() const { return memoireIa.wanderTimer; }
+	void setWanderTimer(float t) { memoireIa.wanderTimer = t; }
+	void decWanderTimer(float dt) { memoireIa.wanderTimer -= dt; }
+
+	// Attack selection / phases
+	AttackType getAttackType() const { return memoireIa.attackType; }
+	void setNextAttackType(AttackType t) { memoireIa.attackType = t; }
+	AttackPhase getAttackPhase() const { return memoireIa.attackPhase; }
+	void setAttackPhase(AttackPhase p) { memoireIa.attackPhase = p; }
+	float getAttackPhaseTimer() const { return memoireIa.phaseTimer; }
+	void setAttackPhaseTimer(float t) { memoireIa.phaseTimer = t; }
+	void decAttackPhaseTimer(float dt) { memoireIa.phaseTimer -= dt; }
+	bool isHitDone() const { return memoireIa.hitDone; }
+	void setHitDone(bool v) { memoireIa.hitDone = v; }
+	void setAttackCooldown(float seconds) { memoireIa.attackCooldownTimer = seconds; }
+
+	// Déclenche le "hit" de l'attaque une seule fois + applique le cooldown fourni.
+	void triggerAttackHit(float cooldownSeconds)
+	{
+		memoireIa.didAttackThisFrame = true;
+		memoireIa.attackReady = false;
+		memoireIa.attackCooldownTimer = cooldownSeconds;
 	}
 	
 	void moveToward(const Vec2& target, float dt) {
@@ -60,10 +99,9 @@ struct DummyOwner {
 		pos = pos + dir * stats.vitesse * dt;
 	}
 
-	void requestAttack() {
-		memoireIa.didAttackThisFrame = true;
-		memoireIa.attackReady = false;
-	}
+	// (legacy) si tu veux garder l'API, redirige vers triggerAttackHit
+	void requestAttack() { triggerAttackHit(0.6f); }
+
 
 	void resetFrameFlags() {
 		memoireIa.didAttackThisFrame = false;
@@ -88,6 +126,23 @@ struct DummyOwner {
 		fsm->changeState(next, *this);
 	}
 
+	bool attackReady() const {
+		return memoireIa.attackReady;
+	}
+
+	void setAnimState(const std::string& s) {
+		animState = s;
+	}
+
+	void updateCooldown(float dt) {
+		if (!memoireIa.attackReady) {
+			memoireIa.attackCooldownTimer -= dt;
+			if (memoireIa.attackCooldownTimer <= 0.f) {
+				memoireIa.attackCooldownTimer = 0.f;
+				memoireIa.attackReady = true;
+			}
+		}
+	}
 
 };
 

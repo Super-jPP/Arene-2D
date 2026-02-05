@@ -4,20 +4,20 @@
 #include "ai/states/EnemyWander.hpp"
 #include "ai/states/EnemyChase.hpp"
 #include "test/DummyOwner.hpp"
-#include "math/vec2.hpp"
+#include "math/Vec2.hpp"
 
 int main()
 {
     DummyOwner dummy;
 
-    // --- Initialisation dummy ---
+
     dummy.pos = Vec2{ 0.f, 0.f };
-    dummy.playerPos = Vec2{ 300.f, 0.f };   // loin au départ
+    dummy.playerPos = Vec2{ 300.f, 0.f };   
     dummy.hp = 100.f;
 
     dummy.stats.vitesse = 50.f;
     dummy.stats.detectRadius = 100.f;
-    dummy.stats.lostRadius = 140.f;       // IMPORTANT: > detectRadius
+    dummy.stats.lostRadius = 140.f;      
     dummy.stats.attackRange = 20.f;
 
     dummy.memoireIa.wanderDir = Vec2{ 1.f, 0.f };
@@ -33,7 +33,7 @@ int main()
     fsm.setInitial(EnemyWander<DummyOwner>::instance(), dummy);
 
     const float dt = 1.f / 60.f;
-    const int totalFrames = 6 * 60; // 6 secondes
+    const int totalFrames = 6 * 60; 
 
     for (int i = 0; i < totalFrames; ++i)
     {
@@ -41,10 +41,7 @@ int main()
 
         dummy.resetFrameFlags();
 
-        // Timeline test:
-        // 0-2s: joueur loin -> Wander
-        // 2-4s: joueur proche -> Chase
-        // 4-6s: joueur loin -> Wander
+   
         if (t < 2.f)
             dummy.playerPos = Vec2{ 300.f, 0.f };
         else if (t < 4.f)
@@ -54,7 +51,7 @@ int main()
 
         fsm.update(dummy, dt);
 
-        // Affichage toutes les 10 frames pour éviter le spam
+
         if (i % 10 == 0)
         {
             const float dist = Vec2::distance(dummy.getPos(), dummy.getPlayerPos());
