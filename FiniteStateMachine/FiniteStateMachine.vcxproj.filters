@@ -34,6 +34,9 @@
     <Filter Include="src\input">
       <UniqueIdentifier>{66ebf3a7-76af-428c-9d55-bb8c90d584c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{cf9baaa7-8416-4e08-a620-fe72c3956192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="src\render\SpriteComponent.h">
       <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\DummyOwner.hpp">
+      <Filter>test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

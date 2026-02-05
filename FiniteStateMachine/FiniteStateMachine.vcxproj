@@ -183,6 +183,7 @@
     <ClInclude Include="src\render\DebugDraw.h" />
     <ClInclude Include="src\render\Renderer.h" />
     <ClInclude Include="src\render\SpriteComponent.h" />
+    <ClInclude Include="src\test\DummyOwner.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="docs\ai_contract.md" />
