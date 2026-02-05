@@ -138,6 +138,8 @@
   </ItemDefinitionGroup>
   <!-- ================= SOURCES ================= -->
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="src\ai\fsm\FSM.cpp" />
     <ClCompile Include="src\ai\fsm\IState.cpp" />
     <ClCompile Include="src\ai\states\EnemyAttack.cpp" />
@@ -158,6 +160,7 @@
     <ClCompile Include="src\render\SpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="src\ai\fsm\FSM.h" />
     <ClInclude Include="src\ai\fsm\IState.h" />
     <ClInclude Include="src\ai\states\EnemyAttack.h" />
