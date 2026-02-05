@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -138,7 +138,6 @@
   </ItemDefinitionGroup>
   <!-- ================= SOURCES ================= -->
   <ItemGroup>
-    <ClCompile Include="src\ai\fsm\IState.hpp" />
     <ClCompile Include="src\ai\states\EnemyAttack.cpp" />
     <ClCompile Include="src\ai\states\EnemyChase.cpp" />
     <ClCompile Include="src\ai\states\EnemyDead.cpp" />
@@ -153,11 +152,11 @@
     <ClCompile Include="src\gameplay\Entity.cpp" />
     <ClCompile Include="src\gameplay\Stats.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\math\Vec2.cpp" />
     <ClCompile Include="src\render\SpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ai\fsm\FSM.hpp" />
+    <ClInclude Include="src\ai\fsm\IState.hpp" />
     <ClInclude Include="src\ai\states\EnemyAttack.h" />
     <ClInclude Include="src\ai\states\EnemyChase.h" />
     <ClInclude Include="src\ai\states\EnemyDead.h" />
@@ -179,7 +178,7 @@
     <ClInclude Include="src\gameplay\Stats.h" />
     <ClInclude Include="src\gameplay\Weapons.h" />
     <ClInclude Include="src\input\Input.h" />
-    <ClInclude Include="src\math\Vec2.h" />
+    <ClInclude Include="src\math\Vec2.hpp" />
     <ClInclude Include="src\render\Camera.h" />
     <ClInclude Include="src\render\DebugDraw.h" />
     <ClInclude Include="src\render\Renderer.h" />
