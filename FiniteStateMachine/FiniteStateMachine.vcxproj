@@ -139,9 +139,8 @@
   <!-- ================= SOURCES ================= -->
   <ItemGroup>
     <ClCompile Include="src\ai\states\EnemyAttack.cpp" />
-    <ClCompile Include="src\ai\states\EnemyChase.cpp" />
+    <ClCompile Include="src\ai\states\EnemyChase.hpp" />
     <ClCompile Include="src\ai\states\EnemyDead.cpp" />
-    <ClCompile Include="src\ai\states\EnemyWander.cpp" />
     <ClCompile Include="src\ai\states\EnnemyIdle.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\Random.cpp" />
@@ -158,9 +157,8 @@
     <ClInclude Include="src\ai\fsm\FSM.hpp" />
     <ClInclude Include="src\ai\fsm\IState.hpp" />
     <ClInclude Include="src\ai\states\EnemyAttack.h" />
-    <ClInclude Include="src\ai\states\EnemyChase.h" />
     <ClInclude Include="src\ai\states\EnemyDead.h" />
-    <ClInclude Include="src\ai\states\EnemyWander.h" />
+    <ClInclude Include="src\ai\states\EnemyWander.hpp" />
     <ClInclude Include="src\ai\states\EnnemyIdle.h" />
     <ClInclude Include="src\core\Config.h" />
     <ClInclude Include="src\core\Game.h" />

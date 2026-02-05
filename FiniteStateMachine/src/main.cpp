@@ -1,21 +1,74 @@
-#include <SFML/Graphics.hpp>
+#include <iostream>
+
+#include "ai/fsm/FSM.hpp"
+#include "ai/states/EnemyWander.hpp"
+#include "ai/states/EnemyChase.hpp"
+#include "test/DummyOwner.hpp"
+#include "math/vec2.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    DummyOwner dummy;
 
-    while (window.isOpen())
+    // --- Initialisation dummy ---
+    dummy.pos = Vec2{ 0.f, 0.f };
+    dummy.playerPos = Vec2{ 300.f, 0.f };   // loin au départ
+    dummy.hp = 100.f;
+
+    dummy.stats.vitesse = 50.f;
+    dummy.stats.detectRadius = 100.f;
+    dummy.stats.lostRadius = 140.f;       // IMPORTANT: > detectRadius
+    dummy.stats.attackRange = 20.f;
+
+    dummy.memoireIa.wanderDir = Vec2{ 1.f, 0.f };
+    dummy.memoireIa.wanderTimer = 1.0f;
+    dummy.memoireIa.spawnTimer = 0.f;
+    dummy.memoireIa.attackReady = true;
+    dummy.memoireIa.didAttackThisFrame = false;
+
+    // --- FSM ---
+    ai::fsm::FSM<DummyOwner> fsm;
+    dummy.bindFSM(fsm);
+
+    fsm.setInitial(EnemyWander<DummyOwner>::instance(), dummy);
+
+    const float dt = 1.f / 60.f;
+    const int totalFrames = 6 * 60; // 6 secondes
+
+    for (int i = 0; i < totalFrames; ++i)
     {
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-        }
+        const float t = i * dt;
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        dummy.resetFrameFlags();
+
+        // Timeline test:
+        // 0-2s: joueur loin -> Wander
+        // 2-4s: joueur proche -> Chase
+        // 4-6s: joueur loin -> Wander
+        if (t < 2.f)
+            dummy.playerPos = Vec2{ 300.f, 0.f };
+        else if (t < 4.f)
+            dummy.playerPos = Vec2{ 50.f, 0.f };
+        else
+            dummy.playerPos = Vec2{ 300.f, 0.f };
+
+        fsm.update(dummy, dt);
+
+        // Affichage toutes les 10 frames pour éviter le spam
+        if (i % 10 == 0)
+        {
+            const float dist = Vec2::distance(dummy.getPos(), dummy.getPlayerPos());
+
+            std::cout
+                << "t=" << t
+                << "  state=" << fsm.getStateName()
+                << "  debug=" << dummy.debugStateName
+                << "  pos=(" << dummy.pos.x << "," << dummy.pos.y << ")"
+                << "  player=(" << dummy.playerPos.x << "," << dummy.playerPos.y << ")"
+                << "  dist=" << dist
+                << "\n";
+        }
     }
+
+    return 0;
 }

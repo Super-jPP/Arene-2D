@@ -1,5 +1,8 @@
 #pragma once
 #include "math/vec2.hpp"
+#include "ai/fsm/FSM.hpp"
+#include "ai/fsm/IState.hpp"
+
 #include <string>
 
 struct Stats {
@@ -24,6 +27,8 @@ struct DummyOwner {
 	Stats stats;
 	MemoireIa memoireIa;
 	std::string debugStateName;
+	ai::fsm::FSM<DummyOwner>* fsm = nullptr;
+
 
 	Vec2 getPos() const {
 		return pos;
@@ -41,9 +46,10 @@ struct DummyOwner {
 		return stats;
 	};
 
-	bool attackReady() const {
-		return memoireIa.attackReady;
-	};
+	bool attackReady() const { 
+		return memoireIa.attackReady; 
+	}
+
 
 	void setDebugStateName(const std::string& name) {
 		debugStateName = name;
@@ -62,5 +68,26 @@ struct DummyOwner {
 	void resetFrameFlags() {
 		memoireIa.didAttackThisFrame = false;
 	}
+
+	void moveDir(const Vec2& direction, float dt)
+	{
+		if (direction.x == 0.f && direction.y == 0.f)
+			return;
+		Vec2 dir = direction.normalized();
+		pos = pos + dir * stats.vitesse * dt;
+	}
+
+	void bindFSM(ai::fsm::FSM<DummyOwner>& f)
+	{
+		fsm = &f;
+	}
+
+	void changeState(ai::fsm::IState<DummyOwner>& next)
+	{
+		if (!fsm) return; 
+		fsm->changeState(next, *this);
+	}
+
+
 };
 
