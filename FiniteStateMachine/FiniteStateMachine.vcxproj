@@ -140,6 +140,9 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Weapons.cpp" />
     <ClCompile Include="src\ai\fsm\FSM.cpp" />
     <ClCompile Include="src\ai\fsm\IState.cpp" />
     <ClCompile Include="src\ai\states\EnemyAttack.cpp" />

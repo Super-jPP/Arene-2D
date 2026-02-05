@@ -1,9 +1,11 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include "Scene.h"
 
-class Game {
+class Game
+{
 public:
     Game();
     void run();
@@ -15,6 +17,5 @@ private:
 
 private:
     sf::RenderWindow m_window;
-    std::unique_ptr<Scene> m_currentScene;
-    sf::Clock m_clock; // Pour calculer le DeltaTime (dt)
+    std::unique_ptr<Scene> m_scene;
 };

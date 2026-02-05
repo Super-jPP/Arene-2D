@@ -1,8 +1,5 @@
 #include "Vec2.h"
 
-//Constructeur
-Vec2::Vec2() = default;
-
 Vec2::Vec2(float x_, float y_)
 	: x(x_), y(y_)
 {
