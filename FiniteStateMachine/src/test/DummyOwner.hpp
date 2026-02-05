@@ -1,6 +1,14 @@
 #pragma once
 #include "math/Vec2.hpp"
 #include "ai/AttackTypes.hpp"
+#include "ai/EnemyStateId.hpp"
+
+// State headers for ID->instance mapping
+#include "ai/states/EnemyWander.hpp"
+#include "ai/states/EnemyChase.hpp"
+#include "ai/states/EnemyAttack.hpp"
+#include "ai/states/EnemyDead.hpp"
+#include "ai/states/EnnemyIdle.hpp"
 #include "ai/fsm/FSM.hpp"
 #include "ai/fsm/IState.hpp"
 
@@ -40,7 +48,6 @@ struct DummyOwner {
 	std::string debugStateName;
 	ai::fsm::FSM<DummyOwner>* fsm = nullptr;
 	std::string animState;
-
 
 
 	Vec2 getPos() const {
@@ -85,6 +92,8 @@ struct DummyOwner {
 	bool isHitDone() const { return memoireIa.hitDone; }
 	void setHitDone(bool v) { memoireIa.hitDone = v; }
 	void setAttackCooldown(float seconds) { memoireIa.attackCooldownTimer = seconds; }
+	float getAttackCooldown() const { return memoireIa.attackCooldownTimer; }
+	bool didAttackThisFrame() const { return memoireIa.didAttackThisFrame; }
 
 	// Déclenche le "hit" de l'attaque une seule fois + applique le cooldown fourni.
 	void triggerAttackHit(float cooldownSeconds)
@@ -120,11 +129,45 @@ struct DummyOwner {
 		fsm = &f;
 	}
 
+	// -----------------------------------------------------------------
+	// Update IA centralisé (dead check + cooldown + update FSM)
+	// NOTE: côté gameplay, Dev B fera l'équivalent dans Enemy::update().
+	// -----------------------------------------------------------------
+	void updateAI(float dt)
+	{
+		resetFrameFlags();
+		updateCooldown(dt);
+
+		// Dead check centralisé (évite de dupliquer dans chaque state)
+		if (hp <= 0.f)
+		{
+			changeState(EnemyStateId::Dead);
+			return;
+		}
+
+		if (fsm)
+			fsm->update(*this, dt);
+	}
+
 	void changeState(ai::fsm::IState<DummyOwner>& next)
 	{
 		if (!fsm) return; 
 		fsm->changeState(next, *this);
 	}
+// Convenience overload to avoid inter-state type dependencies in headers.
+void changeState(EnemyStateId id)
+{
+    if (!fsm) return;
+    switch (id)
+    {
+    case EnemyStateId::Wander: fsm->changeState(EnemyWander<DummyOwner>::instance(), *this); break;
+    case EnemyStateId::Chase:  fsm->changeState(EnemyChase<DummyOwner>::instance(), *this);  break;
+    case EnemyStateId::Attack: fsm->changeState(EnemyAttack<DummyOwner>::instance(), *this); break;
+    case EnemyStateId::Dead:   fsm->changeState(EnemyDead<DummyOwner>::instance(), *this);   break;
+    case EnemyStateId::Idle:   fsm->changeState(EnnemyIdle<DummyOwner>::instance(), *this);  break;
+    }
+}
+
 
 	bool attackReady() const {
 		return memoireIa.attackReady;
@@ -142,6 +185,12 @@ struct DummyOwner {
 				memoireIa.attackReady = true;
 			}
 		}
+	}
+
+	void applyDamage(float dmg)
+	{
+		hp -= dmg;
+		if (hp < 0.f) hp = 0.f;
 	}
 
 };

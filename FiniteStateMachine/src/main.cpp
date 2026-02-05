@@ -2,9 +2,30 @@
 
 #include "ai/fsm/FSM.hpp"
 #include "ai/states/EnemyWander.hpp"
-#include "ai/states/EnemyChase.hpp"
 #include "test/DummyOwner.hpp"
 #include "math/Vec2.hpp"
+
+static const char* toString(AttackType t)
+{
+    switch (t)
+    {
+    case AttackType::Light: return "Light";
+    case AttackType::Heavy: return "Heavy";
+    case AttackType::Dash:  return "Dash";
+    default:                return "?";
+    }
+}
+
+static const char* toString(AttackPhase p)
+{
+    switch (p)
+    {
+    case AttackPhase::Windup:   return "Windup";
+    case AttackPhase::Active:   return "Active";
+    case AttackPhase::Recovery: return "Recovery";
+    default:                    return "?";
+    }
+}
 
 int main()
 {
@@ -39,8 +60,7 @@ int main()
     {
         const float t = i * dt;
 
-        dummy.resetFrameFlags();
-
+        // Scenario simple: le joueur s'approche, puis repart.
    
         if (t < 2.f)
             dummy.playerPos = Vec2{ 300.f, 0.f };
@@ -49,7 +69,13 @@ int main()
         else
             dummy.playerPos = Vec2{ 300.f, 0.f };
 
-        fsm.update(dummy, dt);
+        // Exemple: tuer l'ennemi vers la fin pour tester EnemyDead
+        if (t > 5.0f && dummy.getHP() > 0.f)
+        {
+            dummy.applyDamage(9999.f);
+        }
+
+        dummy.updateAI(dt);
 
 
         if (i % 10 == 0)
@@ -60,9 +86,16 @@ int main()
                 << "t=" << t
                 << "  state=" << fsm.getStateName()
                 << "  debug=" << dummy.debugStateName
+                << "  hp=" << dummy.getHP()
                 << "  pos=(" << dummy.pos.x << "," << dummy.pos.y << ")"
                 << "  player=(" << dummy.playerPos.x << "," << dummy.playerPos.y << ")"
                 << "  dist=" << dist
+                << "  atkReady=" << (dummy.attackReady() ? 1 : 0)
+                << "  atkType=" << toString(dummy.getAttackType())
+                << "  phase=" << toString(dummy.getAttackPhase())
+                << "  phaseT=" << dummy.getAttackPhaseTimer()
+                << "  cd=" << dummy.getAttackCooldown()
+                << "  hitFrame=" << (dummy.didAttackThisFrame() ? 1 : 0)
                 << "\n";
         }
     }

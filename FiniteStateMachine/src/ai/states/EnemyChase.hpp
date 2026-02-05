@@ -2,14 +2,8 @@
 
 #include "ai/fsm/IState.hpp"
 #include "ai/AttackTypes.hpp"
+#include "ai/EnemyStateId.hpp"
 #include "math/Vec2.hpp"
-
-
-
-template <typename Owner>
-class EnemyWander;
-template <typename Owner>
-class EnemyAttack;
 template <typename Owner>
 class EnemyChase : public ai::fsm::IState<Owner>
 {
@@ -38,7 +32,7 @@ public:
 
         if (dist > owner.getStats().lostRadius)
         {
-            owner.changeState(EnemyWander<Owner>::instance());
+            owner.changeState(EnemyStateId::Wander);
             return;
         }
        
@@ -51,7 +45,7 @@ public:
             else
                 owner.setNextAttackType(AttackType::Light);
 
-            owner.changeState(EnemyAttack<Owner>::instance());
+            owner.changeState(EnemyStateId::Attack);
             return;
         }
 

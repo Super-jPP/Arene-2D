@@ -2,12 +2,9 @@
 
 #include "ai/fsm/IState.hpp"
 #include "ai/AttackTypes.hpp"
+#include "ai/EnemyStateId.hpp"
 
 #include <string>
-
-template <typename Owner>
-class EnemyChase;
-
 struct AttackDef
 {
     const char* animBase;
@@ -101,7 +98,7 @@ public:
             if (owner.getAttackPhaseTimer() <= 0.f)
             {
                 // Fin d'attaque => retour en chase
-                owner.changeState(EnemyChase<Owner>::instance());
+                owner.changeState(EnemyStateId::Chase);
                 return;
             }
         }

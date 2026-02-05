@@ -2,14 +2,7 @@
 
 #include "ai/fsm/IState.hpp"
 #include "math/Vec2.hpp"
-
-
-
-template <typename Owner>
-class EnemyChase;
-template <typename Owner>
-class EnemyAttack;
-
+#include "ai/EnemyStateId.hpp"
 template <typename Owner>
 class EnemyWander : public ai::fsm::IState<Owner>
 {
@@ -22,6 +15,9 @@ public:
     void onEnter(Owner& owner) override
     {
         owner.setDebugStateName("Wander");
+
+        // facultatif: rend l'état observable visuellement
+        owner.setAnimState("Walk");
 
         if (owner.getWanderTimer() <= 0.f)
             owner.setWanderTimer(1.0f);
@@ -38,7 +34,7 @@ public:
         const float dist = Vec2::distance(owner.getPos(), owner.getPlayerPos());
         if (dist <= owner.getStats().detectRadius)
         {
-            owner.changeState(EnemyChase<Owner>::instance());
+            owner.changeState(EnemyStateId::Chase);
             return;
         }
 
