@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -27,6 +27,7 @@
     <ProjectName>FiniteStateMachine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -54,6 +55,8 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  
+  
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -82,6 +85,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -132,63 +136,12 @@
       </AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  
   <ItemGroup>
     <None Include="docs\ai_contract.md" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\core\Config.cpp" />
-    <ClCompile Include="src\core\Game.cpp" />
-    <ClCompile Include="src\core\Random.cpp" />
-    <ClCompile Include="src\core\Scene\GameScene.cpp" />
-    <ClCompile Include="src\core\Time.cpp" />
-    <ClCompile Include="src\ecs\EntityId.cpp" />
-    <ClCompile Include="src\ecs\World.cpp" />
-    <ClCompile Include="src\gameplay\Damage.cpp" />
-    <ClCompile Include="src\gameplay\Entity.cpp" />
-    <ClCompile Include="src\gameplay\Player.cpp" />
-    <ClCompile Include="src\gameplay\Stats.cpp" />
-    <ClCompile Include="src\gameplay\Weapons.cpp" />
-    <ClCompile Include="src\input\Input.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\math\Vec2.cpp" />
-    <ClCompile Include="src\render\SpriteComponent.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\ai\AttackTypes.hpp" />
-    <ClInclude Include="src\ai\contracts\EnemyOwnerConcept.hpp" />
-    <ClInclude Include="src\ai\EnemyStateId.hpp" />
-    <ClInclude Include="src\ai\fsm\FSM.hpp" />
-    <ClInclude Include="src\ai\fsm\IState.hpp" />
-    <ClInclude Include="src\ai\states\EnemyAttack.hpp" />
-    <ClInclude Include="src\ai\states\EnemyChase.hpp" />
-    <ClInclude Include="src\ai\states\EnemyDead.hpp" />
-    <ClInclude Include="src\ai\states\EnemyWander.hpp" />
-    <ClInclude Include="src\ai\states\EnnemyIdle.hpp" />
-    <ClInclude Include="src\ai\types\AIStats.hpp" />
-    <ClInclude Include="src\core\Config.h" />
-    <ClInclude Include="src\core\Game.h" />
-    <ClInclude Include="src\core\Random.h" />
-    <ClInclude Include="src\core\Scene\GameScene.h" />
-    <ClInclude Include="src\core\Scene\Scene.h" />
-    <ClInclude Include="src\core\Time.h" />
-    <ClInclude Include="src\ecs\EntityId.h" />
-    <ClInclude Include="src\ecs\World.h" />
-    <ClInclude Include="src\gameplay\Damage.h" />
-    <ClInclude Include="src\gameplay\Enemy.h" />
-    <ClInclude Include="src\gameplay\Entity.h" />
-    <ClInclude Include="src\gameplay\Obstacles.h" />
-    <ClInclude Include="src\gameplay\Player.h" />
-    <ClInclude Include="src\gameplay\Spawner.h" />
-    <ClInclude Include="src\gameplay\Stats.h" />
-    <ClInclude Include="src\gameplay\Weapons.h" />
-    <ClInclude Include="src\input\Input.h" />
-    <ClInclude Include="src\math\Vec2.h" />
-    <ClInclude Include="src\render\Camera.h" />
-    <ClInclude Include="src\render\DebugDraw.h" />
-    <ClInclude Include="src\render\Renderer.h" />
-    <ClInclude Include="src\render\SpriteComponent.h" />
-    <ClInclude Include="src\test\DummyOwner.hpp" />
-  </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  
+  
+  <ItemGroup><ClCompile Include="src\core\Config.cpp" /><ClCompile Include="src\core\Game.cpp" /><ClCompile Include="src\core\Random.cpp" /><ClCompile Include="src\core\Scene\GameScene.cpp" /><ClCompile Include="src\core\Time.cpp" /><ClCompile Include="src\ecs\EntityId.cpp" /><ClCompile Include="src\ecs\World.cpp" /><ClCompile Include="src\gameplay\Damage.cpp" /><ClCompile Include="src\gameplay\Entity.cpp" /><ClCompile Include="src\gameplay\Player.cpp" /><ClCompile Include="src\gameplay\Stats.cpp" /><ClCompile Include="src\gameplay\Weapons.cpp" /><ClCompile Include="src\input\Input.cpp" /><ClCompile Include="src\main.cpp" /><ClCompile Include="src\math\Vec2.cpp" /><ClCompile Include="src\render\Animator.cpp" /><ClCompile Include="src\render\SpriteComponent.cpp" /></ItemGroup><ItemGroup><ClInclude Include="src\ai\AttackTypes.hpp" /><ClInclude Include="src\ai\contracts\EnemyOwnerConcept.hpp" /><ClInclude Include="src\ai\EnemyStateId.hpp" /><ClInclude Include="src\ai\fsm\FSM.hpp" /><ClInclude Include="src\ai\fsm\IState.hpp" /><ClInclude Include="src\ai\states\EnemyAttack.hpp" /><ClInclude Include="src\ai\states\EnemyChase.hpp" /><ClInclude Include="src\ai\states\EnemyDead.hpp" /><ClInclude Include="src\ai\states\EnemyWander.hpp" /><ClInclude Include="src\ai\states\EnnemyIdle.hpp" /><ClInclude Include="src\ai\types\AIStats.hpp" /><ClInclude Include="src\core\Config.h" /><ClInclude Include="src\core\Game.h" /><ClInclude Include="src\core\Random.h" /><ClInclude Include="src\core\Scene\GameScene.h" /><ClInclude Include="src\core\Scene\Scene.h" /><ClInclude Include="src\core\Time.h" /><ClInclude Include="src\ecs\EntityId.h" /><ClInclude Include="src\ecs\World.h" /><ClInclude Include="src\gameplay\Damage.h" /><ClInclude Include="src\gameplay\Enemy.h" /><ClInclude Include="src\gameplay\Entity.h" /><ClInclude Include="src\gameplay\Obstacles.h" /><ClInclude Include="src\gameplay\Player.h" /><ClInclude Include="src\gameplay\Spawner.h" /><ClInclude Include="src\gameplay\Stats.h" /><ClInclude Include="src\gameplay\Weapons.h" /><ClInclude Include="src\input\Input.h" /><ClInclude Include="src\math\Vec2.h" /><ClInclude Include="src\math\Vec2.hpp" /><ClInclude Include="src\render\Animator.h" /><ClInclude Include="src\render\Camera.h" /><ClInclude Include="src\render\DebugDraw.h" /><ClInclude Include="src\render\Renderer.h" /><ClInclude Include="src\render\SpriteComponent.h" /><ClInclude Include="src\test\DummyOwner.hpp" /></ItemGroup><Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

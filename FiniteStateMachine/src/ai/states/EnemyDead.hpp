@@ -1,7 +1,7 @@
 #pragma once
 #include "ai/fsm/IState.hpp"
 #include "ai/EnemyStateId.hpp"
-#include "math/Vec2.h"
+#include "math/Vec2.hpp"
 
 // Minimal "Dead" state: stop movement and stay dead.
 // Generic: relies only on Owner interface methods used here.

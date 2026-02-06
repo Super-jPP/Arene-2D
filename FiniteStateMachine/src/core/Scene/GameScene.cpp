@@ -7,7 +7,7 @@ GameScene::GameScene() {
 
 void GameScene::update(float dt, sf::RenderWindow& window) {
     Vec2 moveDir = m_input.movementDirection();
-    m_player.update(dt, moveDir);
+    m_player.update(dt, moveDir, m_input.isAttacking());
 
     if (m_input.isAttacking())
     {
