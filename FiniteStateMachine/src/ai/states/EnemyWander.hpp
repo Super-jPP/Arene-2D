@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ai/fsm/IState.hpp"
-#include "math/Vec2.hpp"
+#include "math/Vec2.h"
 #include "ai/EnemyStateId.hpp"
 template <typename Owner>
 class EnemyWander : public ai::fsm::IState<Owner>

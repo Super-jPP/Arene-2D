@@ -1,7 +1,7 @@
 #pragma once
 #include "ai/fsm/IState.hpp"
 #include "ai/EnemyStateId.hpp"
-#include "math/Vec2.hpp"
+#include "math/Vec2.h"
 
 // Minimal "Idle" state: stand still, can transition to Wander based on spawn timer if provided.
 // To keep this generic, we only use methods that already exist in DummyOwner in this repo.

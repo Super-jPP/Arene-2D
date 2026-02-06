@@ -1,0 +1,10 @@
+#pragma once
+#include <SFML/Graphics.hpp>
+
+class Scene {
+public:
+    virtual ~Scene() = default;
+
+    virtual void update(float dt, sf::RenderWindow& window) = 0;
+    virtual void draw(sf::RenderWindow& window) = 0;
+};

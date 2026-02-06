@@ -3,7 +3,7 @@
 #include "ai/fsm/IState.hpp"
 #include "ai/AttackTypes.hpp"
 #include "ai/EnemyStateId.hpp"
-#include "math/Vec2.hpp"
+#include "math/Vec2.h"
 template <typename Owner>
 class EnemyChase : public ai::fsm::IState<Owner>
 {

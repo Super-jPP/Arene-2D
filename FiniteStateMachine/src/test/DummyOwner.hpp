@@ -1,5 +1,5 @@
 #pragma once
-#include "math/Vec2.hpp"
+#include "math/Vec2.h"
 #include "ai/AttackTypes.hpp"
 #include "ai/EnemyStateId.hpp"
 

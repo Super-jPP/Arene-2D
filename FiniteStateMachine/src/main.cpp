@@ -1,9 +1,14 @@
+
+#include <SFML/Graphics.hpp>
+#include "core/Game.h"
+
+
 #include <iostream>
 
 #include "ai/fsm/FSM.hpp"
 #include "ai/states/EnemyWander.hpp"
 #include "test/DummyOwner.hpp"
-#include "math/Vec2.hpp"
+#include "math/Vec2.h"
 
 static const char* toString(AttackType t)
 {
@@ -33,12 +38,12 @@ int main()
 
 
     dummy.pos = Vec2{ 0.f, 0.f };
-    dummy.playerPos = Vec2{ 300.f, 0.f };   
+    dummy.playerPos = Vec2{ 300.f, 0.f };
     dummy.hp = 100.f;
 
     dummy.stats.vitesse = 50.f;
     dummy.stats.detectRadius = 100.f;
-    dummy.stats.lostRadius = 140.f;      
+    dummy.stats.lostRadius = 140.f;
     dummy.stats.attackRange = 20.f;
 
     dummy.memoireIa.wanderDir = Vec2{ 1.f, 0.f };
@@ -54,14 +59,14 @@ int main()
     fsm.setInitial(EnemyWander<DummyOwner>::instance(), dummy);
 
     const float dt = 1.f / 60.f;
-    const int totalFrames = 6 * 60; 
+    const int totalFrames = 6 * 60;
 
     for (int i = 0; i < totalFrames; ++i)
     {
         const float t = i * dt;
 
         // Scenario simple: le joueur s'approche, puis repart.
-   
+
         if (t < 2.f)
             dummy.playerPos = Vec2{ 300.f, 0.f };
         else if (t < 4.f)
