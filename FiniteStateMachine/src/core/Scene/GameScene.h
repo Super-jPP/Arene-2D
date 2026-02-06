@@ -17,4 +17,5 @@ private:
     Player m_player;
     Input  m_input;
     Weapons m_weapons;
+    World m_world;
 };

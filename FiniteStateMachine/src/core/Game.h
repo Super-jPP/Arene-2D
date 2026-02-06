@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include "core/Scene/Scene.h"
+#include "core/Scene/GameScene.h"
 
 class Game
 {

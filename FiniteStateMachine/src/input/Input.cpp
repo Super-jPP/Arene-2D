@@ -32,3 +32,11 @@ Vec2 Input::getMousePosition(const sf::RenderWindow& window) const
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     return Vec2(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 }
+
+std::optional<WeaponType> Input::getSelectedWeapon() const {
+    using enum sf::Keyboard::Key;
+    if (sf::Keyboard::isKeyPressed(Num1)) return WeaponType::PISTOL;
+    if (sf::Keyboard::isKeyPressed(Num2)) return WeaponType::SHOTGUN;
+    if (sf::Keyboard::isKeyPressed(Num3)) return WeaponType::MAGIC_WAND;
+    return std::nullopt;
+}

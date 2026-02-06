@@ -46,6 +46,9 @@
     <Filter Include="src\core\Scene">
       <UniqueIdentifier>{14701ED8-86B0-47F3-AE7A-7E40D17CEC46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\gameplay\EnemyType">
+      <UniqueIdentifier>{51d6916e-13ae-49d7-a3aa-4a11a2cbdc6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Config.cpp">
@@ -95,6 +98,21 @@
     </ClCompile>
     <ClCompile Include="src\render\SpriteComponent.cpp">
       <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>src\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Wolf.cpp">
+      <Filter>src\gameplay\EnemyType</Filter>
+    </ClCompile>
+    <ClCompile Include="Hollow.cpp">
+      <Filter>src\gameplay\EnemyType</Filter>
+    </ClCompile>
+    <ClCompile Include="Bones.cpp">
+      <Filter>src\gameplay\EnemyType</Filter>
+    </ClCompile>
+    <ClCompile Include="SecondaryWeapons.cpp">
+      <Filter>src\gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +217,18 @@
     </ClInclude>
     <ClInclude Include="src\test\DummyOwner.hpp">
       <Filter>src\test</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolf.h">
+      <Filter>src\gameplay\EnemyType</Filter>
+    </ClInclude>
+    <ClInclude Include="Hollow.h">
+      <Filter>src\gameplay\EnemyType</Filter>
+    </ClInclude>
+    <ClInclude Include="Bones.h">
+      <Filter>src\gameplay\EnemyType</Filter>
+    </ClInclude>
+    <ClInclude Include="SecondaryWeapons.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

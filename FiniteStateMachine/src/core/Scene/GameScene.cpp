@@ -2,12 +2,19 @@
 #include "input/Input.h"
 
 GameScene::GameScene() {
-  
+    m_weapons.setWeaponType(WeaponType::PISTOL);
 }
 
 void GameScene::update(float dt, sf::RenderWindow& window) {
     Vec2 moveDir = m_input.movementDirection();
+
     m_player.update(dt, moveDir);
+    m_world.update(dt, m_player.position());
+
+    auto newWeapon = m_input.getSelectedWeapon();
+    if (newWeapon.has_value()) {
+        m_weapons.setWeaponType(newWeapon.value()); // Change les stats (vitesse, taille, nombre)
+    }
 
     if (m_input.isAttacking())
     {
@@ -27,6 +34,7 @@ void GameScene::update(float dt, sf::RenderWindow& window) {
 }
 
 void GameScene::draw(sf::RenderWindow& window) {
+    m_world.draw(window);
     m_player.draw(window);
     m_weapons.draw(window);
 }

@@ -136,6 +136,10 @@
     <None Include="docs\ai_contract.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bones.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Hollow.cpp" />
+    <ClCompile Include="SecondaryWeapons.cpp" />
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\Game.cpp" />
     <ClCompile Include="src\core\Random.cpp" />
@@ -152,8 +156,12 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\math\Vec2.cpp" />
     <ClCompile Include="src\render\SpriteComponent.cpp" />
+    <ClCompile Include="Wolf.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bones.h" />
+    <ClInclude Include="Hollow.h" />
+    <ClInclude Include="SecondaryWeapons.h" />
     <ClInclude Include="src\ai\AttackTypes.hpp" />
     <ClInclude Include="src\ai\contracts\EnemyOwnerConcept.hpp" />
     <ClInclude Include="src\ai\EnemyStateId.hpp" />
@@ -188,6 +196,7 @@
     <ClInclude Include="src\render\Renderer.h" />
     <ClInclude Include="src\render\SpriteComponent.h" />
     <ClInclude Include="src\test\DummyOwner.hpp" />
+    <ClInclude Include="Wolf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
