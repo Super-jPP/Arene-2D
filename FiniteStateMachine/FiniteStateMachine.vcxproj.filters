@@ -96,6 +96,12 @@
     <ClCompile Include="src\render\SpriteComponent.cpp">
       <Filter>src\render</Filter>
     </ClCompile>
+    <ClCompile Include="src\render\Animator.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\render\RepeatingMap.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ai\AttackTypes.hpp">
@@ -195,6 +201,12 @@
       <Filter>src\render</Filter>
     </ClInclude>
     <ClInclude Include="src\render\SpriteComponent.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\render\Animator.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\render\RepeatingMap.h">
       <Filter>src\render</Filter>
     </ClInclude>
     <ClInclude Include="src\test\DummyOwner.hpp">

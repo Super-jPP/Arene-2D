@@ -2,7 +2,7 @@
 #include "core/Scene/GameScene.h"
 
 Game::Game()
-    : m_window(sf::VideoMode({ 1280, 720 }), "Vampire Survivors - FSM")
+    : m_window(sf::VideoMode({ 1920, 1080 }), "Vampire Survivors - FSM")
 {
     m_window.setFramerateLimit(60);
     m_scene = std::make_unique<GameScene>();

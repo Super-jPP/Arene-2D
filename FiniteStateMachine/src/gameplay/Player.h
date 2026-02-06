@@ -2,21 +2,33 @@
 
 #include <SFML/Graphics.hpp>
 #include "math/Vec2.h"
+#include "render/Animator.h"
 
 class Player
 {
 public:
-	Player();
+    Player();
 
-	void update(float dt, const Vec2& moveDir);
-	void draw(sf::RenderWindow& window) const;
+    void update(float dt, const Vec2& moveDir, bool wantsAttack);
+    void draw(sf::RenderWindow& window) const;
 
-	Vec2 position() const;
+    Vec2 position() const;
+
+    // Clamp player inside the world (map) bounds
+    void setWorldBounds(const Vec2& worldSize);
 
 private:
-	Vec2 m_position;
-	Vec2 m_direction;
-	float m_speed;
+    Vec2 m_position;
+    Vec2 m_direction;
+    Vec2 m_worldSize{ 0.f, 0.f }; // world/map size in pixels
+    float m_speed = 0.f;
 
-	sf::RectangleShape m_shape;
+    bool m_isAttacking = false;
+
+    // --- Animation ---
+    render::Animator m_anim;
+
+    sf::Texture m_texIdle;
+    sf::Texture m_texRun;
+    sf::Texture m_texLightAttack;
 };
