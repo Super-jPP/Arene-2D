@@ -1,5 +1,5 @@
 #pragma once
-#include "core/Scene.h"
+#include "core/Scene/Scene.h"
 #include "ecs/World.h"
 #include "gameplay/Player.h"
 #include "gameplay/Spawner.h"

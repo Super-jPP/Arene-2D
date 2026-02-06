@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "Scene.h"
+#include "core/Scene/Scene.h"
 
 class Game
 {

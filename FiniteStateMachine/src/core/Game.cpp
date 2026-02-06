@@ -1,5 +1,5 @@
 #include "core/Game.h"
-#include "GameScene.h"
+#include "core/Scene/GameScene.h"
 
 Game::Game()
     : m_window(sf::VideoMode({ 1280, 720 }), "Vampire Survivors - FSM")
