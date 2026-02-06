@@ -1,217 +1,166 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="math">
-      <UniqueIdentifier>{83a3855d-bbf5-4bc7-bbb6-e16590b02938}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ecs">
-      <UniqueIdentifier>{f5c0dd87-88bf-4741-9ac2-68f2b7f8f43b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="gameplay">
-      <UniqueIdentifier>{667d66bb-b679-4073-8da9-4132bd7f2495}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="render">
-      <UniqueIdentifier>{41fda8ec-a023-4597-82c8-1d45e87025f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="input">
-      <UniqueIdentifier>{66ebf3a7-76af-428c-9d55-bb8c90d584c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="docs">
       <UniqueIdentifier>{c8c59fd6-717b-465c-9715-82ecef443ca7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="core">
-      <UniqueIdentifier>{281078be-f3ba-417f-9331-8ed3910122cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{9cd5b0fd-3cd8-4c44-b748-fafe393361c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ai">
+    <Filter Include="src\ecs">
+      <UniqueIdentifier>{f5c0dd87-88bf-4741-9ac2-68f2b7f8f43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{281078be-f3ba-417f-9331-8ed3910122cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ai">
       <UniqueIdentifier>{935e3ef9-391a-4533-94f7-083ffde47e64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ai\fsm">
+    <Filter Include="src\ai\fsm">
       <UniqueIdentifier>{21142cde-ebf5-4efa-abe3-3675025252fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ai\states">
+    <Filter Include="src\ai\states">
       <UniqueIdentifier>{7066c7b2-5e29-4ee0-b912-897b1ebfc804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gameplay">
+      <UniqueIdentifier>{667d66bb-b679-4073-8da9-4132bd7f2495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math">
+      <UniqueIdentifier>{83a3855d-bbf5-4bc7-bbb6-e16590b02938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{41fda8ec-a023-4597-82c8-1d45e87025f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{66ebf3a7-76af-428c-9d55-bb8c90d584c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{cf9baaa7-8416-4e08-a620-fe72c3956192}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="Random.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="Config.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="Vec2.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityId.cpp">
-      <Filter>ecs</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>ecs</Filter>
-    </ClCompile>
-    <ClCompile Include="Damage.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Obstacles.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Spawner.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Stats.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapons.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="IState.cpp">
-      <Filter>ai\fsm</Filter>
-    </ClCompile>
-    <ClCompile Include="FSM.cpp">
-      <Filter>ai\fsm</Filter>
-    </ClCompile>
-    <ClCompile Include="EnnemyIdle.cpp">
-      <Filter>ai\states</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyWander.cpp">
-      <Filter>ai\states</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyDead.cpp">
-      <Filter>ai\states</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyChase.cpp">
-      <Filter>ai\states</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyAttack.cpp">
-      <Filter>ai\states</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteComponent.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugDraw.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ai\states\EnemyAttack.hpp">
+      <Filter>src\ai\states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ai\states\EnemyChase.hpp">
+      <Filter>src\ai\states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Config.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Random.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Time.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ecs\EntityId.cpp">
+      <Filter>src\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ecs\World.cpp">
+      <Filter>src\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameplay\Damage.cpp">
+      <Filter>src\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameplay\Entity.cpp">
+      <Filter>src\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameplay\Stats.cpp">
+      <Filter>src\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\render\SpriteComponent.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Time.h">
-      <Filter>core</Filter>
+    <ClInclude Include="src\ai\fsm\FSM.hpp">
+      <Filter>src\ai\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>core</Filter>
+    <ClInclude Include="src\ai\fsm\IState.hpp">
+      <Filter>src\ai\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>core</Filter>
+    <ClInclude Include="src\ai\states\EnemyDead.hpp">
+      <Filter>src\ai\states</Filter>
     </ClInclude>
-    <ClInclude Include="Random.h">
-      <Filter>core</Filter>
+    <ClInclude Include="src\ai\states\EnemyWander.hpp">
+      <Filter>src\ai\states</Filter>
     </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>core</Filter>
+    <ClInclude Include="src\ai\states\EnnemyIdle.hpp">
+      <Filter>src\ai\states</Filter>
     </ClInclude>
-    <ClInclude Include="Vec2.h">
-      <Filter>math</Filter>
+    <ClInclude Include="src\core\Config.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="EntityId.h">
-      <Filter>ecs</Filter>
+    <ClInclude Include="src\core\Game.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>ecs</Filter>
+    <ClInclude Include="src\core\Random.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="Damage.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\core\Scene.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\core\Time.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\ecs\EntityId.h">
+      <Filter>src\ecs</Filter>
     </ClInclude>
-    <ClInclude Include="Obstacles.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\ecs\World.h">
+      <Filter>src\ecs</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\gameplay\Damage.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Spawner.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\gameplay\Enemy.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Stats.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\gameplay\Entity.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Weapons.h">
-      <Filter>gameplay</Filter>
+    <ClInclude Include="src\gameplay\Obstacles.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="FSM.h">
-      <Filter>ai\fsm</Filter>
+    <ClInclude Include="src\gameplay\Player.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="IState.h">
-      <Filter>ai\fsm</Filter>
+    <ClInclude Include="src\gameplay\Spawner.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyWander.h">
-      <Filter>ai\states</Filter>
+    <ClInclude Include="src\gameplay\Stats.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="EnnemyIdle.h">
-      <Filter>ai\states</Filter>
+    <ClInclude Include="src\gameplay\Weapons.h">
+      <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyDead.h">
-      <Filter>ai\states</Filter>
+    <ClInclude Include="src\input\Input.h">
+      <Filter>src\input</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyChase.h">
-      <Filter>ai\states</Filter>
+    <ClInclude Include="src\math\Vec2.hpp">
+      <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyAttack.h">
-      <Filter>ai\states</Filter>
+    <ClInclude Include="src\render\Camera.h">
+      <Filter>src\render</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>input</Filter>
+    <ClInclude Include="src\render\DebugDraw.h">
+      <Filter>src\render</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteComponent.h">
-      <Filter>render</Filter>
+    <ClInclude Include="src\render\Renderer.h">
+      <Filter>src\render</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>render</Filter>
+    <ClInclude Include="src\render\SpriteComponent.h">
+      <Filter>src\render</Filter>
     </ClInclude>
-    <ClInclude Include="DebugDraw.h">
-      <Filter>render</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>render</Filter>
+    <ClInclude Include="src\test\DummyOwner.hpp">
+      <Filter>test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="design.md">
+    <None Include="docs\ai_contract.md">
       <Filter>docs</Filter>
     </None>
   </ItemGroup>

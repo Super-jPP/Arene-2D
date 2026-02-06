@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -138,13 +138,8 @@
   </ItemDefinitionGroup>
   <!-- ================= SOURCES ================= -->
   <ItemGroup>
-    <ClCompile Include="src\ai\fsm\FSM.cpp" />
-    <ClCompile Include="src\ai\fsm\IState.cpp" />
-    <ClCompile Include="src\ai\states\EnemyAttack.cpp" />
-    <ClCompile Include="src\ai\states\EnemyChase.cpp" />
-    <ClCompile Include="src\ai\states\EnemyDead.cpp" />
-    <ClCompile Include="src\ai\states\EnemyWander.cpp" />
-    <ClCompile Include="src\ai\states\EnnemyIdle.cpp" />
+    <ClCompile Include="src\ai\states\EnemyAttack.hpp" />
+    <ClCompile Include="src\ai\states\EnemyChase.hpp" />
     <ClCompile Include="src\core\Config.cpp" />
     <ClCompile Include="src\core\Random.cpp" />
     <ClCompile Include="src\core\Time.cpp" />
@@ -154,17 +149,14 @@
     <ClCompile Include="src\gameplay\Entity.cpp" />
     <ClCompile Include="src\gameplay\Stats.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\math\Vec2.cpp" />
     <ClCompile Include="src\render\SpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ai\fsm\FSM.h" />
-    <ClInclude Include="src\ai\fsm\IState.h" />
-    <ClInclude Include="src\ai\states\EnemyAttack.h" />
-    <ClInclude Include="src\ai\states\EnemyChase.h" />
-    <ClInclude Include="src\ai\states\EnemyDead.h" />
-    <ClInclude Include="src\ai\states\EnemyWander.h" />
-    <ClInclude Include="src\ai\states\EnnemyIdle.h" />
+    <ClInclude Include="src\ai\fsm\FSM.hpp" />
+    <ClInclude Include="src\ai\fsm\IState.hpp" />
+    <ClInclude Include="src\ai\states\EnemyDead.hpp" />
+    <ClInclude Include="src\ai\states\EnemyWander.hpp" />
+    <ClInclude Include="src\ai\states\EnnemyIdle.hpp" />
     <ClInclude Include="src\core\Config.h" />
     <ClInclude Include="src\core\Game.h" />
     <ClInclude Include="src\core\Random.h" />
@@ -181,11 +173,15 @@
     <ClInclude Include="src\gameplay\Stats.h" />
     <ClInclude Include="src\gameplay\Weapons.h" />
     <ClInclude Include="src\input\Input.h" />
-    <ClInclude Include="src\math\Vec2.h" />
+    <ClInclude Include="src\math\Vec2.hpp" />
     <ClInclude Include="src\render\Camera.h" />
     <ClInclude Include="src\render\DebugDraw.h" />
     <ClInclude Include="src\render\Renderer.h" />
     <ClInclude Include="src\render\SpriteComponent.h" />
+    <ClInclude Include="src\test\DummyOwner.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docs\ai_contract.md" />
   </ItemGroup>
   <!-- ================= HEADERS ================= -->
   <!-- ================= DOCS ================= -->
