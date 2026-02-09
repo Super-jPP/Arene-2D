@@ -156,8 +156,9 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\math\Vec2.cpp" />
     <ClCompile Include="src\render\SpriteComponent.cpp" />
-    <ClCompile Include="Wolf.cpp" />
-  </ItemGroup>
+    <ClCompile Include="src\render\Animator.cpp" />
+    <ClCompile Include="src\render\RepeatingMap.cpp" />
+</ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bones.h" />
     <ClInclude Include="Hollow.h" />
@@ -198,6 +199,9 @@
     <ClInclude Include="src\test\DummyOwner.hpp" />
     <ClInclude Include="Wolf.h" />
   </ItemGroup>
+    <ClInclude Include="src\render\Animator.h" />
+    <ClInclude Include="src\render\RepeatingMap.h" />
+</ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

@@ -1,6 +1,5 @@
 #include "input/Input.h"
 #include <SFML/Window/Keyboard.hpp>
-#include <map>
 
 Vec2 Input::movementDirection() const
 {
@@ -21,13 +20,13 @@ Vec2 Input::movementDirection() const
     return dir;
 }
 
-bool Input::isAttacking() const 
+bool Input::isAttacking() const
 {
     return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
+           sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
 }
 
-Vec2 Input::getMousePosition(const sf::RenderWindow& window) const 
+Vec2 Input::getMousePosition(const sf::RenderWindow& window) const
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     return Vec2(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
@@ -39,4 +38,8 @@ std::optional<WeaponType> Input::getSelectedWeapon() const {
     if (sf::Keyboard::isKeyPressed(Num2)) return WeaponType::SHOTGUN;
     if (sf::Keyboard::isKeyPressed(Num3)) return WeaponType::MAGIC_WAND;
     return std::nullopt;
+}
+    const sf::Vector2i pixel = sf::Mouse::getPosition(window);
+    const sf::Vector2f world = window.mapPixelToCoords(pixel);
+    return Vec2(world.x, world.y);
 }

@@ -1,8 +1,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "core/Game.h"
-
-
 #include <iostream>
 
 #include "ai/fsm/FSM.hpp"
@@ -15,7 +13,6 @@ int main()
     Game game;
     game.run();
     return 0;
-}
 
 static const char* toString(AttackType t)
 {

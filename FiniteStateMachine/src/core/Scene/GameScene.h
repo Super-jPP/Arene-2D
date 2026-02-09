@@ -1,21 +1,30 @@
 #pragma once
+
 #include "core/Scene/Scene.h"
-#include "ecs/World.h"
 #include "gameplay/Player.h"
 #include "gameplay/Spawner.h"
-#include "input/Input.h"
 #include "gameplay/Weapons.h"
+#include "render/RepeatingMap.h"
 
-class GameScene : public Scene {
+#include <SFML/Graphics/View.hpp>
+
+class GameScene : public Scene
+{
 public:
     GameScene();
 
-    void update(float dt, sf::RenderWindow& window) override;     // Gestion entrées + mouvement + collisions
-    void draw(sf::RenderWindow& window) override; // Rendu de l'arène
+    void update(float dt, sf::RenderWindow& window) override;
+    void draw(sf::RenderWindow& window) override;
 
 private:
-    Player m_player;
-    Input  m_input;
+    Player  m_player;
     Weapons m_weapons;
+
     World m_world;
+
+    sf::View m_camera;
+
+    render::RepeatingMap m_map;
+    Vec2 m_worldSize{ 0.f, 0.f };
+
 };
