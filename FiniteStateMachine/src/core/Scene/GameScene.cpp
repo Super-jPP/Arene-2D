@@ -3,6 +3,8 @@
 
 GameScene::GameScene() {
     m_weapons.setWeaponType(WeaponType::PISTOL);
+
+    m_world.spawnWolf(Vec2(100.f, 100.f));
 }
 
 void GameScene::update(float dt, sf::RenderWindow& window) {

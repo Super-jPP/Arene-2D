@@ -1,8 +1,8 @@
-#include "Enemy.h"
+#include "gameplay/Enemy.h"
 
 class Wolf : public Enemy {
 public:
-    Ghost(Vec2 pos) : Enemy(pos, 150.f, sf::Color(255, 255, 255, 150)) {}
+    Wolf(Vec2 pos) : Enemy(pos, 150.f, sf::Color(255, 255, 255, 150)) {}
 
     void update(float dt, const Vec2& playerPos) override {
         // Logique de mouvement différente possible ici

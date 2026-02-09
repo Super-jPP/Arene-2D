@@ -1,8 +1,8 @@
-#include "Enemy.h"
+#include "gameplay/Enemy.h"
 
 class Bones : public Enemy {
 public:
-    Zombie(Vec2 pos) : Enemy(pos, 60.f, sf::Color::Green) {}
+    Bones(Vec2 pos) : Enemy(pos, 60.f, sf::Color::Green) {}
 
     void update(float dt, const Vec2& playerPos) override {
         Vec2 dir = (playerPos - m_position).normalized();

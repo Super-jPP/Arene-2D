@@ -5,7 +5,7 @@
 class Enemy {
 public:
     Enemy(Vec2 pos, float speed, sf::Color color);
-    virtual ~Enemy() = default; // Important pour un héritage propre
+    virtual ~Enemy() = default; 
 
     // Méthode virtuelle : chaque enfant aura sa propre logique
     virtual void update(float dt, const Vec2& playerPos) = 0;
