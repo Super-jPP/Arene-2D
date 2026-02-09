@@ -47,6 +47,9 @@ namespace render
         bool isFinished() const;
         const std::string& current() const { return m_currentName; }
 
+        bool facingLeft() const { return m_facingLeft; }
+        const std::string& currentName() const { return m_currentName; }
+
     private:
         void applyFrame();
 

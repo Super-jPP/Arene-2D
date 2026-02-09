@@ -48,7 +48,6 @@ namespace render
 
         for (int i = 0; i < frameCount; ++i)
         {
-            // SFML 3: IntRect is constructed from {pos}, {size}
             clip.frames.emplace_back(
                 sf::Vector2i{ i * frameW, 0 },
                 sf::Vector2i{ frameW, frameH }

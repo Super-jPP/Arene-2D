@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <SFML/Graphics.hpp>
 #include "math/Vec2.h"
@@ -31,4 +31,12 @@ private:
     sf::Texture m_texIdle;
     sf::Texture m_texRun;
     sf::Texture m_texLightAttack;
+    sf::Texture m_texTurn; // 🔹 turnaround animation
+
+    float m_lastMoveX = 0.f;
+    bool  m_isTurning = false;
+    bool  m_pendingFacingLeft = false;
+    bool  m_turnSheetFacesRight = true; // mets false si ta sheet est native "vers gauche"
+
+
 };

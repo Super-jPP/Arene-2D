@@ -29,13 +29,17 @@ void GameScene::update(float dt, sf::RenderWindow& window)
     // --- Keyboard input (SFML direct)
     Vec2 moveDir{ 0.f, 0.f };
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
         moveDir.y -= 1.f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
         moveDir.y += 1.f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
         moveDir.x -= 1.f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
         moveDir.x += 1.f;
 
     bool wantsAttack =
