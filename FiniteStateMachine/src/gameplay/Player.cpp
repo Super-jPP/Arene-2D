@@ -159,3 +159,31 @@ Vec2 Player::position() const
 {
     return m_position;
 }
+
+Vec2 Player::feetPosition() const
+{
+    // In this project the Animator sprite origin is (0,0), so m_position is the sprite's top-left.
+    // Compute feet collider from the actual sprite bounds so it stays correct even if you swap sprites.
+    const sf::FloatRect gb = m_anim.sprite().getGlobalBounds();
+
+    const float centerX = gb.position.x + gb.size.x * 0.5f;
+    const float feetY   = gb.position.y + gb.size.y - m_feetInsetFromBottom;
+
+    return { centerX, feetY };
+}
+
+float Player::feetRadius() const
+{
+    return m_feetRadius;
+}
+
+
+void Player::setPosition(const Vec2& p)
+{
+    m_position = p;
+}
+
+float Player::collisionRadius() const
+{
+    return 18.f;
+}

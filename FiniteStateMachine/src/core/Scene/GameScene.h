@@ -3,6 +3,7 @@
 #include "core/Scene/Scene.h"
 #include "gameplay/Player.h"
 #include "gameplay/Spawner.h"
+#include "gameplay/Obstacles.h"
 #include "gameplay/Weapons.h"
 #include "render/RepeatingMap.h"
 
@@ -22,6 +23,7 @@ private:
 
     // Spawns and owns all enemies (placeholder circles for now)
     Spawner m_spawner;
+    Obstacles m_obstacles;
 
     sf::View m_camera;
 
