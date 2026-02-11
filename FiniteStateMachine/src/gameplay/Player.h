@@ -14,6 +14,16 @@ public:
 
     Vec2 position() const;
 
+    // --- Collision "pieds" (top-down)
+    // Petite hitbox en bas du sprite : empêche le joueur de marcher sur les obstacles
+    // uniquement avec les pieds (plus naturel visuellement).
+    Vec2 feetPosition() const;
+    float feetRadius() const;
+
+    void setPosition(const Vec2& p);
+    float collisionRadius() const;
+
+
     // Clamp player inside the world (map) bounds
     void setWorldBounds(const Vec2& worldSize);
 

@@ -31,22 +31,7 @@
     <Filter Include="src\test">
       <UniqueIdentifier>{D3F7BA82-00D0-4899-9CCB-FA26BF798C57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ai\contracts">
-      <UniqueIdentifier>{08D1A1C1-C57F-4703-ADAD-39BD190C09C1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ai\fsm">
-      <UniqueIdentifier>{020DB982-EEC3-4966-B246-3B394DEE3DC0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ai\states">
-      <UniqueIdentifier>{79750318-8DDA-4DF7-84E4-5335A2246B07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ai\types">
-      <UniqueIdentifier>{C3C57C03-A65B-4B4C-BF66-2E7DB2452C88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\core\Scene">
-      <UniqueIdentifier>{14701ED8-86B0-47F3-AE7A-7E40D17CEC46}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
+</ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Config.cpp">
       <Filter>src\core</Filter>
@@ -58,7 +43,7 @@
       <Filter>src\core</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Scene\GameScene.cpp">
-      <Filter>src\core\Scene</Filter>
+      <Filter>src\core</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Time.cpp">
       <Filter>src\core</Filter>
@@ -108,34 +93,34 @@
       <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\contracts\EnemyOwnerConcept.hpp">
-      <Filter>src\ai\contracts</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\EnemyStateId.hpp">
       <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\fsm\FSM.hpp">
-      <Filter>src\ai\fsm</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\fsm\IState.hpp">
-      <Filter>src\ai\fsm</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\states\EnemyAttack.hpp">
-      <Filter>src\ai\states</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\states\EnemyChase.hpp">
-      <Filter>src\ai\states</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\states\EnemyDead.hpp">
-      <Filter>src\ai\states</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\states\EnemyWander.hpp">
-      <Filter>src\ai\states</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\states\EnnemyIdle.hpp">
-      <Filter>src\ai\states</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\types\AIStats.hpp">
-      <Filter>src\ai\types</Filter>
+      <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Config.h">
       <Filter>src\core</Filter>
@@ -147,10 +132,10 @@
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Scene\GameScene.h">
-      <Filter>src\core\Scene</Filter>
+      <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Scene\Scene.h">
-      <Filter>src\core\Scene</Filter>
+      <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Time.h">
       <Filter>src\core</Filter>
@@ -217,5 +202,14 @@
     <None Include="docs\ai_contract.md">
       <Filter>docs</Filter>
     </None>
-    <ClCompile Include="src\gameplay\Enemy.cpp">\n    <Filter>src\gameplay</Filter>\n  </ClCompile>\n  <ClCompile Include="src\gameplay\Spawner.cpp">\n    <Filter>src\gameplay</Filter>\n  </ClCompile>\n</ItemGroup>
+    <ClCompile Include="src\gameplay\Enemy.cpp">
+    <Filter>src\gameplay</Filter>
+  </ClCompile>
+  <ClCompile Include="src\gameplay\Spawner.cpp">
+    <Filter>src\gameplay</Filter>
+  </ClCompile>
+    <ClCompile Include="src\gameplay\Obstacles.cpp">
+      <Filter>src\gameplay</Filter>
+    </ClCompile>
+</ItemGroup>
 </Project>
