@@ -1,41 +1,25 @@
 #pragma once
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "../math/Vec2.h"
-
-enum class WeaponType {
-    PISTOL,
-    SHOTGUN,
-    MAGIC_WAND
-};
-
-struct Projectile {
-    Vec2 position;
-    Vec2 velocity;
-    float size;
-    bool active = true;
-};
+#include "math/Vec2.h"
+#include "Enemy.h"
 
 class Weapons {
 public:
-
-    // Change les stats du système
-    void setWeaponType(WeaponType type);
-
+    Weapons();
     // Crée un ou plusieurs projectiles selon l'arme
-    void fire(const Vec2& startPos, const Vec2& targetDir);
+    void swingSword(const Vec2& playerPos, bool facingLeft, std::vector<Enemy>& enemies);
 
     void update(float dt);
     void draw(sf::RenderWindow& window);
 
 private:
-    std::vector<Projectile> m_projectiles;
-    WeaponType m_currentType;
 
-    // Statistiques gérées par Weapons
-    float m_projSpeed;
-    float m_projSize;
-    int   m_projCount;
-    float m_fireRate;
-    float m_timer;
+    float m_range;      // Portée de l'épée
+    float m_damage;     // Dégâts
+    float m_knockback;  // Force de recul
+
+    // Pour le debug visuel de la zone d'attaque
+    sf::CircleShape m_debugHitzone;
+    float m_debugTimer;
 };

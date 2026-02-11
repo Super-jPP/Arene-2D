@@ -3,9 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <vector>
-
 #include "math/Vec2.h"
 #include "Enemy.h"
+#include "Weapons.h"
+#include "Player.h"
 
 // Spawns enemies like Vampire Survivors/HoloCure:
 // - continuous spawn with a timer
@@ -22,12 +23,12 @@ public:
     void setSpawnRate(float perSecond) { m_spawnRate = perSecond; }
     void setMaxEnemies(std::size_t n)  { m_maxEnemies = n; }
     void setSpawnMargin(float px)      { m_spawnMargin = px; }
+    std::vector<Enemy>& getEnemies() { return m_enemies; }
 
 private:
     Vec2 randomOutsideView(const sf::View& view, const Vec2& playerPos);
     float randf(float a, float b);
 
-private:
     Vec2 m_worldSize{0.f, 0.f};
 
     std::vector<Enemy> m_enemies;

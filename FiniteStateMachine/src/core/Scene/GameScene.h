@@ -6,6 +6,7 @@
 #include "gameplay/Obstacles.h"
 #include "gameplay/Weapons.h"
 #include "render/RepeatingMap.h"
+#include <gameplay/Damage.h>
 
 #include <SFML/Graphics/View.hpp>
 
