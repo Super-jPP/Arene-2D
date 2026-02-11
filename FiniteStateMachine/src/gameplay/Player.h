@@ -62,4 +62,7 @@ private:
     bool  m_isTurning = false;
     bool  m_pendingFacingLeft = false; // <--- UNE SEULE FOIS
     bool  m_turnSheetFacesRight = true;
+
+    float m_feetRadius = 12.f;
+    float m_feetInsetFromBottom = 14.f;
 };
