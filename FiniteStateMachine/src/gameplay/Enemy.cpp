@@ -114,11 +114,40 @@ void Enemy::changeState(EnemyStateId id)
     }
 }
 
+void Enemy::takeDamage(int amount) {
+    if (isDead()) return;
+
+    m_hp -= amount;
+
+    // Petit effet visuel (clignote rouge)
+    m_shape.setFillColor(sf::Color::Red);
+
+    if (m_hp <= 0) {
+        // Déclenche l'état mort de la FSM
+        m_fsm.changeState(EnemyDead<Enemy>::instance(), *this);
+    }
+}
+
+int Enemy::extractPendingDamage()
+{
+    int dmg = m_pendingDamageToPlayer;
+    m_pendingDamageToPlayer = 0;
+    return dmg;
+}
+
+// Update this existing method
 void Enemy::triggerAttackHit(float cooldown)
 {
-    // Here you would check distance + apply damage to player.
-    // For now we only start the cooldown so AI can't instantly re-attack.
     m_attackCooldownTimer = cooldown;
+
+    // Check distance to player to validate the hit
+    float dist = Vec2::distance(m_pos, m_playerPos);
+
+    // If player is within attack range + small buffer, apply damage
+    if (dist <= m_stats.attackRange * 1.2f)
+    {
+        m_pendingDamageToPlayer = 10; // Value could be in AIStats
+    }
 }
 
 void Enemy::applyStateColor()

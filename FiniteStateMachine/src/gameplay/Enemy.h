@@ -40,8 +40,11 @@ public:
 
     void update(float dt, const Vec2& playerPos);
     void draw(sf::RenderTarget& rt) const;
+    void takeDamage(int amount);
+    bool isDead() const { return m_hp <= 0; }
 
     // ---- EnemyOwnerConcept API ----
+    Vec2 position() const { return m_pos; }
     Vec2 getPos() const { return m_pos; }
     Vec2 getPlayerPos() const { return m_playerPos; }
     const AIStats& getStats() const { return m_stats; }
@@ -94,13 +97,23 @@ public:
     bool isHitDone() const { return m_hitDone; }
     void setHitDone(bool v) { m_hitDone = v; }
 
-    // Called once during Active phase by EnemyAttack state.
+    // Retrieve damage intended for player and reset it
+    int extractPendingDamage();
+
+    // Helper for collision
+    float getRadius() const { return m_shape.getRadius(); }
+
     void triggerAttackHit(float cooldown);
+
+protected: // <-- IMPORTANT : protected, pas private, pour Bones/Wolf
+    Vec2 m_position; // <-- Renommé (était m_pos) pour coller à Bones.cpp
 
 private:
     void applyStateColor();
 
-private:
+    int m_hp = 3; // Example HP
+    int m_pendingDamageToPlayer = 0;
+
     Vec2 m_pos{};
     Vec2 m_playerPos{};
 
