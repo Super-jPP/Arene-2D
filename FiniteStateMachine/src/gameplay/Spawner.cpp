@@ -73,6 +73,7 @@ Vec2 Spawner::randomOutsideView(const sf::View& view, const Vec2& playerPos)
 
     return Vec2{ p.x, p.y };
 }
+
 void Spawner::update(float dt, const Vec2& playerPos, const sf::View& cameraView)
 {
     // Spawn timer
@@ -101,6 +102,8 @@ void Spawner::update(float dt, const Vec2& playerPos, const sf::View& cameraView
     for (Enemy& e : m_enemies)
         e.update(dt, playerPos);
 }
+
+
 
 void Spawner::draw(sf::RenderTarget& rt)
 {

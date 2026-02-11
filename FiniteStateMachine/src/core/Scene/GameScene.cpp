@@ -3,6 +3,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <algorithm>
 
+
 GameScene::GameScene()
 {
     // Camera 1920x1080
@@ -49,13 +50,26 @@ void GameScene::update(float dt, sf::RenderWindow& window)
 
     bool wantsAttack =
         sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
+        bool isLeft = m_player.isFacingLeft();
 
     // --- Update player
     m_player.update(dt, moveDir, wantsAttack);
 
     // --- Update enemies
     // IMPORTANT: pass the camera that follows the player so spawns are just outside the view.
+    m_weapons.update(dt);
     m_spawner.update(dt, m_player.position(), m_camera);
+    m_weapons.swingSword(m_player.position(), isLeft, m_spawner.getEnemies());
+    auto& enemiesList = m_spawner.getEnemies();
+    Damage::handleSwordCombat(m_player, enemiesList);
+    Damage::handleEnemyAttacks(m_player, enemiesList);
+
+
+    if (m_player.isDead())
+    {
+        // Handle Game Over (e.g., reset scene, show menu)
+        printf("GAME OVER\n");
+    }
 
     // --- Camera clamp
     const sf::Vector2f viewSize = m_camera.getSize();

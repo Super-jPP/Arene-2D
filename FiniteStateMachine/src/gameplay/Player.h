@@ -17,12 +17,26 @@ public:
     // Clamp player inside the world (map) bounds
     void setWorldBounds(const Vec2& worldSize);
 
+    void takeDamage(int amount);
+    bool isDead() const { return m_hp <= 0; }
+    int getHp() const { return m_hp; }
+
+    bool isAttacking() const { return m_isAttacking; }
+    bool isFacingLeft() const { return m_pendingFacingLeft; }
+
 private:
+    // --- Stats ---
+    int m_hp = 100;
+    int m_maxHp = 100;
+    float m_invincibilityTimer = 0.f;
+
+    // --- Physique ---
     Vec2 m_position;
     Vec2 m_direction;
-    Vec2 m_worldSize{ 0.f, 0.f }; // world/map size in pixels
+    Vec2 m_worldSize{ 0.f, 0.f };
     float m_speed = 0.f;
 
+    // --- États ---
     bool m_isAttacking = false;
 
     // --- Animation ---
@@ -31,12 +45,11 @@ private:
     sf::Texture m_texIdle;
     sf::Texture m_texRun;
     sf::Texture m_texLightAttack;
-    sf::Texture m_texTurn; // 🔹 turnaround animation
+    sf::Texture m_texTurn;
 
+    // Variables pour le demi-tour (TurnAround)
     float m_lastMoveX = 0.f;
     bool  m_isTurning = false;
-    bool  m_pendingFacingLeft = false;
-    bool  m_turnSheetFacesRight = true; // mets false si ta sheet est native "vers gauche"
-
-
+    bool  m_pendingFacingLeft = false; // <--- UNE SEULE FOIS
+    bool  m_turnSheetFacesRight = true;
 };

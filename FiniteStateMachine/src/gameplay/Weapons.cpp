@@ -1,46 +1,45 @@
 #include "gameplay/Weapons.h"
+#include <cmath>
 
-void Weapons::setWeaponType(WeaponType type) {
-    m_currentType = type;
-    switch (type) {
-    case WeaponType::PISTOL:
-        m_projSpeed = 500.f; m_projSize = 5.f; m_projCount = 1; break;
-    case WeaponType::SHOTGUN:
-        m_projSpeed = 400.f; m_projSize = 4.f; m_projCount = 3; break;
-    case WeaponType::MAGIC_WAND:
-        m_projSpeed = 300.f; m_projSize = 10.f; m_projCount = 1; break;
-    }
+Weapons::Weapons()
+    : m_range(60.f)
+    , m_damage(10.f)
+    , m_knockback(50.f)
+    , m_debugTimer(0.f)
+{
+    // Setup du cercle de debug (optionnel)
+    m_debugHitzone.setRadius(m_range);
+    m_debugHitzone.setOrigin({ m_range, m_range });
+    m_debugHitzone.setFillColor(sf::Color(255, 0, 0, 50));
 }
 
-void Weapons::fire(const Vec2& startPos, const Vec2& targetDir) {
-    for (int i = 0; i < m_projCount; ++i) {
-        Projectile p;
-        p.position = startPos;
-        p.size = m_projSize;
+void Weapons::swingSword(const Vec2& playerPos, bool facingLeft, std::vector<Enemy>& enemies) {
+    m_debugTimer = 0.1f; // Affiche la zone rouge brièvement
+    m_debugHitzone.setPosition({ playerPos.x, playerPos.y });
 
-        // Logique Dev B : on utilise tes Vec2 pour la vitesse
-        p.velocity = targetDir * m_projSpeed;
+    for (auto& enemy : enemies) {
+        Vec2 toEnemy = enemy.getPos() - playerPos;
+        float dist = std::sqrt(toEnemy.x * toEnemy.x + toEnemy.y * toEnemy.y);
 
-        // Optionnel : ajouter une petite dispersion pour le Shotgun
-        m_projectiles.push_back(p);
+        if (dist <= m_range) {
+            // Vérification de la direction (le joueur regarde-t-il l'ennemi ?)
+            bool enemyIsLeft = (toEnemy.x < 0);
+
+            if (facingLeft == enemyIsLeft) {
+                // L'ennemi est touché !
+                // enemy.takeDamage(m_damage); 
+                // enemy.applyKnockback(toEnemy.normalized() * m_knockback);
+            }
+        }
     }
 }
 
 void Weapons::update(float dt) {
-    for (auto& p : m_projectiles) {
-        p.position += p.velocity * dt; // Mouvement linéaire simple
-
-        // TODO: Désactiver si hors écran pour les perfs
-    }
-    // Nettoyage des projectiles inactifs
+    if (m_debugTimer > 0) m_debugTimer -= dt;
 }
 
 void Weapons::draw(sf::RenderWindow& window) {
-    sf::CircleShape shape;
-    for (const auto& p : m_projectiles) {
-        shape.setRadius(p.size);
-        shape.setPosition({ p.position.x, p.position.y });
-        shape.setFillColor(sf::Color::Yellow);
-        window.draw(shape);
+    if (m_debugTimer > 0) {
+        window.draw(m_debugHitzone);
     }
 }

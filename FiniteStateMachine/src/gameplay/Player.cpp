@@ -16,6 +16,7 @@ Player::Player()
     : m_position(640.f, 360.f)
     , m_direction(0.f, 0.f)
     , m_speed(250.f)
+    , m_pendingFacingLeft(false)
 {
     m_texIdle.loadFromFile(kIdleSheet);
     m_texRun.loadFromFile(kRunSheet);
@@ -147,6 +148,12 @@ void Player::update(float dt, const Vec2& moveDir, bool wantsAttack)
 
     m_anim.setPosition(m_position.x, m_position.y);
     m_anim.update(dt);
+}
+
+void Player::takeDamage(int amount) {
+    m_hp -= amount;
+    // Log pour vérifier
+    printf("Aie ! PV restants : %d\n", m_hp);
 }
 
 
