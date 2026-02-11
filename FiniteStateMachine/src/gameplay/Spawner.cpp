@@ -87,7 +87,8 @@ void Spawner::update(float dt, const Vec2& playerPos, const sf::View& cameraView
         // Stats (VS-like)
         const float speed = randf(80.f, 130.f);
 
-       
+        // Detect radius: keep it reasonable so enemies actually spend time in Idle/Wander
+        // before noticing the player (FSM states become observable).
         const float detect = 450.f;
         const float range  = 60.f;
         const float cd     = randf(0.6f, 1.0f);

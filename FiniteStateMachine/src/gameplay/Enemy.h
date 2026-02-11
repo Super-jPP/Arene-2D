@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <cmath>
+#include <cstdint>
 
 // ---- Fix macro collision ("None") ----
 // Certains headers peuvent définir un macro None (rare mais possible).
@@ -62,6 +63,24 @@ public:
     void setWanderTimer(float t) { m_wanderTimer = t; }
     void decWanderTimer(float dt) { m_wanderTimer -= dt; }
 
+    // Idle timer (used by Idle state; can also be triggered from Wander)
+    float getIdleTimer() const { return m_idleTimer; }
+    void setIdleTimer(float t) { m_idleTimer = t; }
+    void decIdleTimer(float dt) { m_idleTimer -= dt; }
+
+    // Wander -> Idle random scheduling
+    float getWanderNextIdleIn() const { return m_wanderNextIdleIn; }
+    void setWanderNextIdleIn(float t) { m_wanderNextIdleIn = t; }
+    void decWanderNextIdleIn(float dt) { m_wanderNextIdleIn -= dt; }
+
+    float getWanderIdleCooldown() const { return m_wanderIdleCooldown; }
+    void setWanderIdleCooldown(float t) { m_wanderIdleCooldown = t; }
+    void decWanderIdleCooldown(float dt) { m_wanderIdleCooldown -= dt; }
+
+    // Small deterministic RNG per-enemy (keeps templates generic, no global srand needed)
+    float rand01();
+    float randRange(float a, float b) { return a + (b - a) * rand01(); }
+
     bool attackReady() const { return m_attackCooldownTimer <= 0.f; }
     AttackType getAttackType() const { return m_attackType; }
     void setNextAttackType(AttackType at) { m_attackType = at; }
@@ -91,6 +110,16 @@ private:
     // Wander state data
     Vec2  m_wanderDir{ 1.f, 0.f };
     float m_wanderTimer = 0.f;
+
+    // Idle data
+    float m_idleTimer = 0.f;
+
+    // Wander -> Idle random
+    float m_wanderNextIdleIn = 0.f;
+    float m_wanderIdleCooldown = 0.f;
+
+    // RNG state
+    std::uint32_t m_rngState = 0xA341316Cu;
 
     // Attack data
     AttackType  m_attackType = AttackType::Light;

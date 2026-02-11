@@ -22,6 +22,13 @@ public:
         if (owner.getWanderTimer() <= 0.f)
             owner.setWanderTimer(1.0f);
 
+        // Schedule a random micro-idle while wandering (so Idle is used in real gameplay).
+        if (owner.getWanderNextIdleIn() <= 0.f)
+        {
+            owner.setWanderNextIdleIn(owner.randRange(2.0f, 6.0f)); // every 2..6s
+            owner.setWanderIdleCooldown(0.f);
+        }
+
         const Vec2 d = owner.getWanderDir();
         if (d.x == 0.f && d.y == 0.f)
         {
@@ -31,6 +38,23 @@ public:
 
     void onUpdate(Owner& owner, float dt) override
     {
+        // Random short Idle while wandering ("stop and look" behavior)
+        owner.decWanderIdleCooldown(dt);
+        if (owner.getWanderIdleCooldown() < 0.f) owner.setWanderIdleCooldown(0.f);
+
+        owner.decWanderNextIdleIn(dt);
+        if (owner.getWanderIdleCooldown() <= 0.f && owner.getWanderNextIdleIn() <= 0.f)
+        {
+            owner.setIdleTimer(owner.randRange(0.6f, 1.4f));
+
+            // Prevent immediate re-trigger when coming back to Wander.
+            owner.setWanderIdleCooldown(owner.randRange(1.5f, 3.0f));
+            owner.setWanderNextIdleIn(owner.randRange(2.0f, 6.0f));
+
+            owner.changeState(EnemyStateId::Idle);
+            return;
+        }
+
         const float dist = Vec2::distance(owner.getPos(), owner.getPlayerPos());
         if (dist <= owner.getStats().detectRadius)
         {

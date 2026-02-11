@@ -1,5 +1,7 @@
 #include "Enemy.h"
 
+#include <cstdint>
+
 static Vec2 normalizeSafe(const Vec2& v)
 {
     const float len = std::sqrt(v.x * v.x + v.y * v.y);
@@ -16,6 +18,14 @@ Enemy::Enemy(const Vec2& pos, float speed, float detectRadius, float attackRange
 {
     m_pos = pos;
     m_kind = kind;
+
+    // Init per-enemy RNG with a simple hash of position + kind.
+    // (Deterministic but "random enough" for gameplay.)
+    const std::uint32_t px = static_cast<std::uint32_t>(std::fabs(pos.x) * 1000.f);
+    const std::uint32_t py = static_cast<std::uint32_t>(std::fabs(pos.y) * 1000.f);
+    const std::uint32_t k  = (m_kind == EnemyKind::Green) ? 0x9E3779B9u : 0x7F4A7C15u;
+    m_rngState = (px * 2654435761u) ^ (py * 2246822519u) ^ k;
+    if (m_rngState == 0u) m_rngState = 0xA341316Cu;
 
     m_stats.vitesse = speed;
     m_stats.detectRadius = detectRadius;
@@ -35,9 +45,22 @@ Enemy::Enemy(const Vec2& pos, float speed, float detectRadius, float attackRange
         m_shape.setOutlineColor(sf::Color(20, 120, 20));
     }
 
-    // Start in Wander by default (but if detectRadius is huge, it will instantly switch to Chase).
-    m_fsm.setInitial(EnemyWander<Enemy>::instance(), *this);
+    // Start in Idle for a couple seconds, then it will go back to Wander.
+    m_fsm.setInitial(EnnemyIdle<Enemy>::instance(), *this);
     applyStateColor();
+}
+
+float Enemy::rand01()
+{
+    // xorshift32
+    std::uint32_t x = m_rngState;
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    m_rngState = x;
+
+    // 24-bit mantissa-ish normalization -> [0,1)
+    return static_cast<float>(x & 0x00FFFFFFu) / 16777216.f;
 }
 
 void Enemy::update(float dt, const Vec2& playerPos)

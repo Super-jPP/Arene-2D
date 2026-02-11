@@ -13,6 +13,7 @@
 #include "ai/fsm/IState.hpp"
 
 #include <string>
+#include <random>
 
 struct Stats {
 	float vitesse;
@@ -25,6 +26,13 @@ struct MemoireIa {
 	Vec2 wanderDir;
 	float wanderTimer;
 	float spawnTimer;
+
+	// Idle timer (used by Idle state; can also be triggered from Wander)
+	float idleTimer = 0.f;
+
+	// Wander -> Idle random scheduling
+	float wanderNextIdleIn = 0.f;
+	float wanderIdleCooldown = 0.f;
 
 	bool attackReady;
 	bool didAttackThisFrame;
@@ -66,6 +74,25 @@ struct DummyOwner {
 		return stats;
 	};
 
+// RNG helpers (used by templated AI states)
+static std::mt19937& rng()
+{
+	static std::mt19937 gen{ std::random_device{}() };
+	return gen;
+}
+
+float randRange(float a, float b)
+{
+	std::uniform_real_distribution<float> dist(a, b);
+	return dist(rng());
+}
+
+int randRange(int a, int b)
+{
+	std::uniform_int_distribution<int> dist(a, b);
+	return dist(rng());
+}
+
 	void setDebugStateName(const std::string& name) {
 		debugStateName = name;
 	}
@@ -80,6 +107,19 @@ struct DummyOwner {
 	float getWanderTimer() const { return memoireIa.wanderTimer; }
 	void setWanderTimer(float t) { memoireIa.wanderTimer = t; }
 	void decWanderTimer(float dt) { memoireIa.wanderTimer -= dt; }
+
+	// Idle timer
+	float getIdleTimer() const { return memoireIa.idleTimer; }
+	void setIdleTimer(float t) { memoireIa.idleTimer = t; }
+	void decIdleTimer(float dt) { memoireIa.idleTimer -= dt; }
+
+	// Wander -> Idle random scheduling
+	float getWanderNextIdleIn() const { return memoireIa.wanderNextIdleIn; }
+	void setWanderNextIdleIn(float t) { memoireIa.wanderNextIdleIn = t; }
+	void decWanderNextIdleIn(float dt) { memoireIa.wanderNextIdleIn -= dt; }
+	float getWanderIdleCooldown() const { return memoireIa.wanderIdleCooldown; }
+	void setWanderIdleCooldown(float t) { memoireIa.wanderIdleCooldown = t; }
+	void decWanderIdleCooldown(float dt) { memoireIa.wanderIdleCooldown -= dt; }
 
 	// Attack selection / phases
 	AttackType getAttackType() const { return memoireIa.attackType; }
