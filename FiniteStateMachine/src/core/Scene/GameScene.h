@@ -20,6 +20,9 @@ private:
     Player  m_player;
     Weapons m_weapons;
 
+    // Spawns and owns all enemies (placeholder circles for now)
+    Spawner m_spawner;
+
     sf::View m_camera;
 
     render::RepeatingMap m_map;

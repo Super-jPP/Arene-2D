@@ -217,5 +217,5 @@
     <None Include="docs\ai_contract.md">
       <Filter>docs</Filter>
     </None>
-  </ItemGroup>
+    <ClCompile Include="src\gameplay\Enemy.cpp">\n    <Filter>src\gameplay</Filter>\n  </ClCompile>\n  <ClCompile Include="src\gameplay\Spawner.cpp">\n    <Filter>src\gameplay</Filter>\n  </ClCompile>\n</ItemGroup>
 </Project>

@@ -17,6 +17,11 @@ GameScene::GameScene()
     // Give world bounds to player
     m_player.setWorldBounds(m_worldSize);
 
+    // Init enemy spawner (enemies are simple debug circles for now)
+    m_spawner.init(m_worldSize);
+    m_spawner.setSpawnRate(4.0f);
+    m_spawner.setMaxEnemies(120);
+
     // Camera starts on player
     m_camera.setCenter({
         m_player.position().x,
@@ -48,6 +53,10 @@ void GameScene::update(float dt, sf::RenderWindow& window)
     // --- Update player
     m_player.update(dt, moveDir, wantsAttack);
 
+    // --- Update enemies
+    // IMPORTANT: pass the camera that follows the player so spawns are just outside the view.
+    m_spawner.update(dt, m_player.position(), m_camera);
+
     // --- Camera clamp
     const sf::Vector2f viewSize = m_camera.getSize();
     const sf::Vector2f half = viewSize * 0.5f;
@@ -68,5 +77,6 @@ void GameScene::draw(sf::RenderWindow& window)
     window.setView(m_camera);
 
     window.draw(m_map);
+    m_spawner.draw(window);
     m_player.draw(window);
 }

@@ -146,6 +146,8 @@
     <ClCompile Include="src\gameplay\Damage.cpp" />
     <ClCompile Include="src\gameplay\Entity.cpp" />
     <ClCompile Include="src\gameplay\Player.cpp" />
+    <ClCompile Include="src\gameplay\Enemy.cpp" />
+    <ClCompile Include="src\gameplay\Spawner.cpp" />
     <ClCompile Include="src\gameplay\Stats.cpp" />
     <ClCompile Include="src\gameplay\Weapons.cpp" />
     <ClCompile Include="src\input\Input.cpp" />
