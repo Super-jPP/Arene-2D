@@ -2,6 +2,80 @@
 
 #include <cstdint>
 
+namespace
+{
+    constexpr const char* kBatSheet = "assets/enemies/Bat.png";
+
+    // Skeleton sheets for the Wanderer (Green)
+    constexpr const char* kSkelIdleSheet   = "assets/enemies/Skeleton_Idle.png";
+    constexpr const char* kSkelWanderSheet = "assets/enemies/Skeleton_Wander.png";
+    constexpr const char* kSkelAttackSheet = "assets/enemies/Skeleton_Attack.png";
+
+    // IMPORTANT: keep the bat texture in static storage.
+    // Enemies are stored in std::vector and may be moved when the vector grows.
+    // Our Animator stores a pointer to the texture; if the texture is a member,
+    // that pointer can become invalid after moves. Using a static texture keeps
+    // the address stable and prevents SFML's "texture destroyed" assert.
+    static sf::Texture s_batTexture;
+    static bool s_batLoaded = false;
+
+    // Same reasoning for the Wanderer (Green): Enemy instances can be moved inside std::vector,
+    // so we keep textures in static storage to keep pointers stable.
+    static sf::Texture s_skelIdleTexture;
+    static sf::Texture s_skelWanderTexture;
+    static sf::Texture s_skelAttackTexture;
+    static bool s_skelLoaded = false;
+
+    // Bat.png is a 1-column (vertical) strip.
+    // In this project: Run = 4 frames, Atk = 5 frames, Death = 6 frames.
+    static render::AnimationClip makeVerticalClip(sf::Texture& tex,
+                                                  int startIndex,
+                                                  int frameCount,
+                                                  int frameW,
+                                                  int frameH,
+                                                  float fps,
+                                                  bool loop)
+    {
+        render::AnimationClip clip;
+        clip.texture = &tex;
+        clip.fps = fps;
+        clip.loop = loop;
+        clip.frames.reserve(frameCount);
+
+        for (int i = 0; i < frameCount; ++i)
+        {
+            const int y = (startIndex + i) * frameH;
+            clip.frames.emplace_back(sf::IntRect({ 0, y }, { frameW, frameH }));
+        }
+        return clip;
+    }
+
+    // 1-row horizontal strip helper (frames laid out left->right)
+    static render::AnimationClip makeHorizontalClip(sf::Texture& tex,
+                                                    int startIndex,
+                                                    int frameCount,
+                                                    int frameW,
+                                                    int frameH,
+                                                    float fps,
+                                                    bool loop)
+    {
+        render::AnimationClip clip;
+        clip.texture = &tex;
+        clip.fps = fps;
+        clip.loop = loop;
+        clip.frames.reserve(frameCount);
+
+        for (int i = 0; i < frameCount; ++i)
+        {
+            const int x = (startIndex + i) * frameW;
+            clip.frames.emplace_back(sf::IntRect({ x, 0 }, { frameW, frameH }));
+        }
+        return clip;
+    }
+
+    // (only one makeHorizontalClip helper is needed; keep definition above)
+}
+
 static Vec2 normalizeSafe(const Vec2& v)
 {
     const float len = std::sqrt(v.x * v.x + v.y * v.y);
@@ -21,7 +95,11 @@ Enemy::Enemy(const Vec2& pos, float speed, float detectRadius, float attackRange
 
     if (m_kind == EnemyKind::Green)
     {
-        m_hp = 20; // Le Vert est un "Tank", difficile � tuer
+        m_hp = 20; // Le Vert est un "Tank", difficile à tuer
+    }
+    else if (m_kind == EnemyKind::Bat)
+    {
+        m_hp = 6; // Bat: un peu plus fragile que le Green
     }
     else
     {
@@ -32,7 +110,7 @@ Enemy::Enemy(const Vec2& pos, float speed, float detectRadius, float attackRange
     // (Deterministic but "random enough" for gameplay.)
     const std::uint32_t px = static_cast<std::uint32_t>(std::fabs(pos.x) * 1000.f);
     const std::uint32_t py = static_cast<std::uint32_t>(std::fabs(pos.y) * 1000.f);
-    const std::uint32_t k  = (m_kind == EnemyKind::Green) ? 0x9E3779B9u : 0x7F4A7C15u;
+    const std::uint32_t k  = (m_kind == EnemyKind::Green) ? 0x9E3779B9u : (m_kind == EnemyKind::Bat ? 0xBADC0FFEu : 0x7F4A7C15u);
     m_rngState = (px * 2654435761u) ^ (py * 2246822519u) ^ k;
     if (m_rngState == 0u) m_rngState = 0xA341316Cu;
 
@@ -54,8 +132,79 @@ Enemy::Enemy(const Vec2& pos, float speed, float detectRadius, float attackRange
         m_shape.setOutlineColor(sf::Color(20, 120, 20));
     }
 
-    // Start in Idle for a couple seconds, then it will go back to Wander.
-    m_fsm.setInitial(EnnemyIdle<Enemy>::instance(), *this);
+    // --- Sprite/animation setup for the Bat chaser (EnemyKind::Bat) ---
+    if (m_kind == EnemyKind::Bat)
+    {
+        if (!s_batLoaded)
+        {
+            s_batLoaded = s_batTexture.loadFromFile(kBatSheet);
+        }
+
+        m_useSprite = s_batLoaded;
+        if (m_useSprite)
+        {
+            constexpr int fw = 16;
+            constexpr int fh = 16;
+
+            // Per your request: bats always play ONLY their run animation (first 4 vertical frames), looped.
+            m_anim.addClip("Run", makeVerticalClip(s_batTexture, 0, 4, fw, fh, 12.f, true));
+
+            m_anim.play("Run", true);      // démarre une seule fois
+            m_batRunStarted = true;
+
+            // force l’application du premier frame (évite le “full spritesheet” si rect pas encore set)
+            m_anim.update(0.f);
+
+            m_anim.setOrigin(fw * 0.5f, fh * 0.9f);
+            m_anim.setScale(4.f, 4.f);
+            m_anim.setPosition(m_pos.x, m_pos.y);
+
+        }
+    }
+
+    // --- Sprite/animation setup for the Wanderer (Green) using the Skeleton sheets ---
+    if (m_kind == EnemyKind::Green)
+    {
+        if (!s_skelLoaded)
+        {
+            const bool a = s_skelIdleTexture.loadFromFile(kSkelIdleSheet);
+            const bool b = s_skelWanderTexture.loadFromFile(kSkelWanderSheet);
+            const bool c = s_skelAttackTexture.loadFromFile(kSkelAttackSheet);
+            s_skelLoaded = (a && b && c);
+        }
+
+        if (s_skelLoaded)
+        {
+            // Sheets are 1-row horizontal strips: 4 frames (Idle/Wander) and 8 frames (Attack).
+            constexpr int fw = 150;
+            constexpr int fh = 150;
+
+            m_useSprite = true;
+
+            m_anim.addClip("Idle",   makeHorizontalClip(s_skelIdleTexture,   0, 4, fw, fh, 10.f, true));
+            m_anim.addClip("Wander", makeHorizontalClip(s_skelWanderTexture, 0, 4, fw, fh, 12.f, true));
+            m_anim.addClip("Attack", makeHorizontalClip(s_skelAttackTexture, 0, 8, fw, fh, 14.f, false));
+
+            // No dedicated death sheet provided: freeze on the last attack frame as a simple "death" pose.
+            m_anim.addClip("Death",  makeHorizontalClip(s_skelAttackTexture, 7, 1, fw, fh, 1.f, false));
+
+            m_anim.play("Idle", true);
+            m_anim.setOrigin(fw * 0.5f, fh * 0.5f);  // pivot presque aux pieds
+            m_anim.setScale(3.0f, 3.0f);
+            m_anim.setPosition(m_pos.x, m_pos.y);
+
+            // Keep the circle as collision/debug only
+            m_shape.setFillColor(sf::Color(0, 0, 0, 0));
+        }
+    }
+
+    // Initial state depends on the agent "type".
+    // - Green uses the full Wanderer behavior (Idle/Wander/Chase/Attack/Dead)
+    // - Bat is a pure chaser (Chase/Attack/Dead)
+    if (m_kind == EnemyKind::Bat)
+        m_fsm.setInitial(EnemyChase<Enemy>::instance(), *this);
+    else
+        m_fsm.setInitial(EnnemyIdle<Enemy>::instance(), *this);
     applyStateColor();
 }
 
@@ -89,12 +238,60 @@ void Enemy::update(float dt, const Vec2& playerPos)
         m_shape.setOutlineThickness(2.f);
         m_shape.setOutlineColor(sf::Color(20, 120, 20));
     }
+
+    // --- Bat animation (EnemyKind::Bat) ---
+    // Per your request: bats ALWAYS play their Run loop, no matter what the FSM state is.
+    if (m_kind == EnemyKind::Bat && m_useSprite)
+    {
+        m_anim.setFacingLeft(m_playerPos.x < m_pos.x);
+
+        // sécurité : si un move/realloc a cassé l’état interne, on relance UNE fois
+        if (!m_batRunStarted)
+        {
+            m_anim.play("Run", true);
+            m_batRunStarted = true;
+            m_anim.update(0.f);
+        }
+
+        m_anim.setPosition(m_pos.x, m_pos.y);
+        m_anim.update(dt);
+    }
+
+
+    // --- Skeleton animation for the Wanderer (EnemyKind::Green) ---
+    if (m_kind == EnemyKind::Green && m_useSprite)
+    {
+        m_anim.setFacingLeft(m_playerPos.x < m_pos.x);
+
+        const std::string n = m_fsm.getStateName();
+        const char* desired = "Idle";
+
+        if (n == "Dead")
+            desired = "Death";
+        else if (n == "Attack")
+            desired = "Attack";
+        else if (n == "Wander" || n == "Chase")
+            desired = "Wander";
+        else
+            desired = "Idle";
+
+        // Avoid restarting loops every frame
+        if (m_anim.currentName() != desired)
+            m_anim.play(desired, true);
+
+        m_anim.setPosition(m_pos.x, m_pos.y);
+        m_anim.update(dt);
+    }
     applyStateColor();
 }
 
 void Enemy::draw(sf::RenderTarget& rt) const
 {
-    rt.draw(m_shape);
+    // Draw sprite visuals when enabled (Bat + Green). Otherwise fallback to the debug circle.
+    if (m_useSprite)
+        rt.draw(m_anim.sprite());
+    else
+        rt.draw(m_shape);
 }
 
 void Enemy::moveDir(Vec2 dir, float dt)
@@ -132,7 +329,7 @@ void Enemy::takeDamage(int amount) {
     m_shape.setFillColor(sf::Color::Red);
 
     if (m_hp <= 0) {
-        // D�clenche l'�tat mort de la FSM
+        // Déclenche l'état mort de la FSM
         m_fsm.changeState(EnemyDead<Enemy>::instance(), *this);
     }
 }

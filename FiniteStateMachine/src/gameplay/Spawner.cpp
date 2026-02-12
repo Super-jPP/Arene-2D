@@ -85,27 +85,32 @@ void Spawner::update(float dt, const Vec2& playerPos, const sf::View& cameraView
 
         const Vec2 pos = randomOutsideView(cameraView, playerPos);
 
-        // 1. On choisit le type au hasard (50/50)
-        const EnemyKind kind = (randf(0.f, 1.f) < 0.5f) ? EnemyKind::Blue : EnemyKind::Green;
+        // Enemy types requested:
+        // - Wanderer (Green): Idle/Wander/Chase/Attack/Dead (existing behavior)
+        // - Chaser   (Bat)  : Chase/Attack/Dead, always chasing the player
+        // Spawn ratio: 70% Chaser, 30% Wanderer
+        const float r = randf(0.f, 1.f);
+        EnemyKind kind = (r < 0.70f) ? EnemyKind::Bat : EnemyKind::Green;
 
-        // 2. On définit la VITESSE selon le type
+        // 2. On dÃ©finit la VITESSE selon le type
         float speed = 0.f;
 
-        if (kind == EnemyKind::Blue) {
-            // Bleu : Rapide et agile
-            speed = randf(110.f, 150.f);
+        if (kind == EnemyKind::Bat) {
+            // Bat : chaser rapide
+            speed = randf(130.f, 180.f);
         }
         else {
             // Vert : Lent (mais ce sera le "tank")
             speed = randf(50.f, 70.f);
         }
 
-        // Stats constantes pour l'instant (détection, portée...)
-        const float detect = 450.f;
+        // Stats constantes pour l'instant (dÃ©tection, portÃ©e...)
+        // Chaser: "detect" is set huge so the generic Chase state never falls back to Wander.
+        const float detect = (kind == EnemyKind::Bat) ? 100000.f : 450.f;
         const float range = 60.f;
         const float cd = randf(0.6f, 1.0f);
 
-        // 3. On crée l'ennemi avec la vitesse choisie
+        // 3. On crÃ©e l'ennemi avec la vitesse choisie
         m_enemies.emplace_back(pos, speed, detect, range, cd, kind);
     }
 
@@ -117,16 +122,16 @@ int Spawner::pruneDeadEnemies()
 {
     int kills = 0;
 
-    // On utilise un itérateur pour supprimer proprement les éléments d'un vector
+    // On utilise un itÃ©rateur pour supprimer proprement les Ã©lÃ©ments d'un vector
     auto it = m_enemies.begin();
     while (it != m_enemies.end())
     {
-        // On suppose que tes ennemis ont une méthode getHp() ou isDead()
+        // On suppose que tes ennemis ont une mÃ©thode getHp() ou isDead()
         // Si tu n'as pas isDead(), utilise : if (it->getHp() <= 0)
         if (it->getHp() <= 0)
         {
             kills++;
-            it = m_enemies.erase(it); // Supprime et récupère le suivant
+            it = m_enemies.erase(it); // Supprime et rÃ©cupÃ¨re le suivant
         }
         else
         {

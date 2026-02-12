@@ -24,12 +24,14 @@
 #include "ai/states/EnnemyIdle.hpp"
 
 #include "math/Vec2.h"
+#include "render/Animator.h"
 
 // Concrete AI-driven enemy that satisfies ai::contracts::EnemyOwnerConcept.
 enum class EnemyKind
 {
     Blue,
-    Green
+    Green,
+    Bat
 };
 
 class Enemy
@@ -105,12 +107,12 @@ public:
     float getRadius() const { return m_shape.getRadius(); }
 
     void triggerAttackHit(float cooldown);
-
 protected: // <-- IMPORTANT : protected, pas private, pour Bones/Wolf
     Vec2 m_position; // <-- Renommé (était m_pos) pour coller à Bones.cpp
 
 private:
     void applyStateColor();
+    bool m_batRunStarted = false;
 
     int m_hp = 3; // Example HP
     int m_pendingDamageToPlayer = 0;
@@ -152,4 +154,8 @@ private:
     // Visual
     EnemyKind m_kind = EnemyKind::Blue;
     sf::CircleShape m_shape;
+
+    // Sprite-based visuals for the bat chaser (EnemyKind::Bat)
+    bool m_useSprite = false;
+    render::Animator m_anim;
 };
