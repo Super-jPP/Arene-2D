@@ -41,6 +41,7 @@ public:
     void update(float dt, const Vec2& playerPos);
     void draw(sf::RenderTarget& rt) const;
     void takeDamage(int amount);
+    int getHp() const { return m_hp; }
     bool isDead() const { return m_hp <= 0; }
 
     // ---- EnemyOwnerConcept API ----

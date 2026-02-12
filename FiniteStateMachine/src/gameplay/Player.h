@@ -30,6 +30,7 @@ public:
     void takeDamage(int amount);
     bool isDead() const { return m_hp <= 0; }
     int getHp() const { return m_hp; }
+    int getMaxHp() const { return m_maxHp; }
 
     bool isAttacking() const { return m_isAttacking; }
     bool isFacingLeft() const { return m_pendingFacingLeft; }

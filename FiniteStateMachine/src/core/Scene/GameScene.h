@@ -8,6 +8,8 @@
 #include "render/RepeatingMap.h"
 #include <gameplay/Damage.h>
 
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/View.hpp>
 
 class GameScene : public Scene
@@ -30,4 +32,8 @@ private:
 
     render::RepeatingMap m_map;
     Vec2 m_worldSize{ 0.f, 0.f };
+
+    int m_score = 0;
+    sf::Font m_font;
+    sf::Text m_scoreText;
 };

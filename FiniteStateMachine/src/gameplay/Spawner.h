@@ -23,6 +23,7 @@ public:
     void setSpawnRate(float perSecond) { m_spawnRate = perSecond; }
     void setMaxEnemies(std::size_t n)  { m_maxEnemies = n; }
     void setSpawnMargin(float px)      { m_spawnMargin = px; }
+    int pruneDeadEnemies();
     std::vector<Enemy>& getEnemies() { return m_enemies; }
 
 private:

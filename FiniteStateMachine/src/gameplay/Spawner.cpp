@@ -103,6 +103,28 @@ void Spawner::update(float dt, const Vec2& playerPos, const sf::View& cameraView
         e.update(dt, playerPos);
 }
 
+int Spawner::pruneDeadEnemies()
+{
+    int kills = 0;
+
+    // On utilise un itérateur pour supprimer proprement les éléments d'un vector
+    auto it = m_enemies.begin();
+    while (it != m_enemies.end())
+    {
+        // On suppose que tes ennemis ont une méthode getHp() ou isDead()
+        // Si tu n'as pas isDead(), utilise : if (it->getHp() <= 0)
+        if (it->getHp() <= 0)
+        {
+            kills++;
+            it = m_enemies.erase(it); // Supprime et récupère le suivant
+        }
+        else
+        {
+            ++it;
+        }
+    }
+    return kills;
+}
 
 
 void Spawner::draw(sf::RenderTarget& rt)
