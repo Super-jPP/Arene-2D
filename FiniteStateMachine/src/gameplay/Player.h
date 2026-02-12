@@ -9,20 +9,21 @@ class Player
 public:
     Player();
 
-    void update(float dt, const Vec2& moveDir, bool wantsAttack);
+    // Vampire-Survivors-like controls:
+    // - movement: keyboard
+    // - attacks: automatic (cooldown)
+    // - facing/attack direction: mouse (aimLeft)
+    void update(float dt, const Vec2& moveDir, bool aimLeft);
     void draw(sf::RenderWindow& window) const;
 
     Vec2 position() const;
 
     // --- Collision "pieds" (top-down)
-    // Petite hitbox en bas du sprite : empêche le joueur de marcher sur les obstacles
-    // uniquement avec les pieds (plus naturel visuellement).
     Vec2 feetPosition() const;
     float feetRadius() const;
 
     void setPosition(const Vec2& p);
     float collisionRadius() const;
-
 
     // Clamp player inside the world (map) bounds
     void setWorldBounds(const Vec2& worldSize);
@@ -34,6 +35,13 @@ public:
 
     bool isAttacking() const { return m_isAttacking; }
     bool isFacingLeft() const { return m_pendingFacingLeft; }
+
+    // True once when an automatic attack starts (consume to avoid repeating).
+    bool consumeAttackTrigger();
+
+    // True once for the 2 hit moments during the same swing (frame 2 and frame 7).
+    bool consumeAttackHit1();
+    bool consumeAttackHit2();
 
 private:
     // --- Stats ---
@@ -50,20 +58,34 @@ private:
     // --- États ---
     bool m_isAttacking = false;
 
-    // --- Animation ---
-    render::Animator m_anim;
+    // Auto-attack cadence
+    float m_attackCooldown = 0.55f;         // seconds between attacks
+    float m_attackCooldownRemaining = 0.f;  // timer interne
+    bool  m_attackTrigger = false;          // déclenchement unique au start
 
+    // --- Animation joueur ---
+    render::Animator m_anim;
     sf::Texture m_texIdle;
     sf::Texture m_texRun;
-    sf::Texture m_texLightAttack;
-    sf::Texture m_texTurn;
+    sf::Texture m_texTurn; // optionnel (pas utilisé si tu veux un VS-like pur)
 
-    // Variables pour le demi-tour (TurnAround)
-    float m_lastMoveX = 0.f;
-    bool  m_isTurning = false;
-    bool  m_pendingFacingLeft = false; // <--- UNE SEULE FOIS
-    bool  m_turnSheetFacesRight = true;
+    // --- FX Slash (séparé du joueur) ---
+    render::Animator m_slashAnim;
+    sf::Texture m_texSlash;
+    bool m_slashPlaying = false;
+    bool m_slashFacingLeft = false; // figé au début du swing
 
+    // ✅ 2 hits pendant l'attaque (frame 2 et 7 sur 9 frames @30fps)
+    float m_slashElapsed = 0.f;
+    bool  m_hit1Pending = false;
+    bool  m_hit2Pending = false;
+    float m_hit1Time = 2.f / 30.f; // ~0.0667s
+    float m_hit2Time = 7.f / 30.f; // ~0.2333s
+
+    // Facing (piloté par la souris)
+    bool  m_pendingFacingLeft = false;
+
+    // --- Feet collider ---
     float m_feetRadius = 12.f;
     float m_feetInsetFromBottom = 14.f;
 };

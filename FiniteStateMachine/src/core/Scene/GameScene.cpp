@@ -39,7 +39,7 @@ GameScene::GameScene()
 
     // Charge une police (mets un fichier .ttf valide dans tes assets !)
     if (!m_font.openFromFile("assets/arial.ttf")) {
-        // Gestion d'erreur si pas de police (optionnel mais conseillé)
+        // Gestion d'erreur si pas de police (optionnel mais conseillÃ©)
         // printf("ERREUR: Impossible de charger la police !\n");
     }
 
@@ -66,8 +66,6 @@ void GameScene::update(float dt, sf::RenderWindow& window)
         moveDir.y /= len;
     }
 
-    // Attack input
-    bool wantsAttack = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
     // Direction du regard (souris) pour l'attaque
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -75,7 +73,7 @@ void GameScene::update(float dt, sf::RenderWindow& window)
     bool isLeft = (worldMouse.x < m_player.position().x);
 
     // Update Player
-    m_player.update(dt, moveDir, wantsAttack);
+    m_player.update(dt, moveDir, isLeft);
 
     Vec2 feet = m_player.feetPosition();
     float r = m_player.feetRadius();
@@ -84,15 +82,15 @@ void GameScene::update(float dt, sf::RenderWindow& window)
     // 1. On convertit ton Vec2 en sf::Vector2f pour la fonction SFML
     sf::Vector2f feetSF(feet.x, feet.y);
 
-    // 2. On passe la version SFML à la fonction (elle va modifier feetSF si collision)
+    // 2. On passe la version SFML Ã  la fonction (elle va modifier feetSF si collision)
     if (m_obstacles.resolveCircle(feetSF, r))
     {
-        // 3. On calcule le déplacement basé sur le résultat corrigé
+        // 3. On calcule le dÃ©placement basÃ© sur le rÃ©sultat corrigÃ©
         // feetSF contient maintenant la position "sortie du mur"
         const float dx = feetSF.x - feet0.x;
         const float dy = feetSF.y - feet0.y;
 
-        // 4. On applique le déplacement au joueur
+        // 4. On applique le dÃ©placement au joueur
         Vec2 currentPos = m_player.position();
         m_player.setPosition({ currentPos.x + dx, currentPos.y + dy });
     }
@@ -101,14 +99,18 @@ void GameScene::update(float dt, sf::RenderWindow& window)
     m_weapons.update(dt);
     m_spawner.update(dt, m_player.position(), m_camera);
 
-    // --- COMBATS (Correction de la redéfinition ici) ---
+    // --- COMBATS (Correction de la redÃ©finition ici) ---
 
-    // On récupère la liste UNE SEULE FOIS ici
+    // On rÃ©cupÃ¨re la liste UNE SEULE FOIS ici
     auto& enemiesList = m_spawner.getEnemies();
 
+    // 2-phase sword hitboxes (slash anim: frame 2 and frame 7)
+    if (m_player.consumeAttackHit1())
+        m_weapons.swingSword(m_player.position(), isLeft, enemiesList, 150.f, 90.f);
+    if (m_player.consumeAttackHit2())
+        m_weapons.swingSword(m_player.position(), isLeft, enemiesList, 190.f, 120.f);
+
     // On utilise cette liste partout :
-    m_weapons.swingSword(m_player.position(), isLeft, enemiesList);
-    Damage::handleSwordCombat(m_player, enemiesList);
     Damage::handleEnemyAttacks(m_player, enemiesList);
 
     // --- GESTION DU SCORE ---
@@ -139,7 +141,7 @@ void GameScene::update(float dt, sf::RenderWindow& window)
 
 void GameScene::draw(sf::RenderWindow& window)
 {
-    // 1. DESSIN DU MONDE (Vue Caméra)
+    // 1. DESSIN DU MONDE (Vue CamÃ©ra)
     window.setView(m_camera);
 
     window.draw(m_map);
@@ -147,20 +149,20 @@ void GameScene::draw(sf::RenderWindow& window)
     m_spawner.draw(window);
     m_player.draw(window);
 
-    // 2. DESSIN DE L'INTERFACE / HUD (Vue Écran par défaut)
-    // On remet la vue par défaut pour que la barre reste "collée" à l'écran
+    // 2. DESSIN DE L'INTERFACE / HUD (Vue Ã‰cran par dÃ©faut)
+    // On remet la vue par dÃ©faut pour que la barre reste "collÃ©e" Ã  l'Ã©cran
     window.setView(window.getDefaultView());
 
-    // --- Paramètres de la barre de vie ---
+    // --- ParamÃ¨tres de la barre de vie ---
     const float paddingX = 20.f;
     const float paddingY = 20.f;
     const float barWidth = 200.f;
     const float barHeight = 20.f;
 
-    // Récupération de la vie
+    // RÃ©cupÃ©ration de la vie
     int hp = m_player.getHp();
     int maxHp = m_player.getMaxHp();
-    // Sécurité pour éviter la division par zéro ou barre négative
+    // SÃ©curitÃ© pour Ã©viter la division par zÃ©ro ou barre nÃ©gative
     float ratio = (maxHp > 0) ? static_cast<float>(std::max(0, hp)) / maxHp : 0.f;
 
     sf::RectangleShape backBar(sf::Vector2f(barWidth, barHeight));
@@ -180,5 +182,5 @@ void GameScene::draw(sf::RenderWindow& window)
     // Dessin
     window.draw(backBar);
     window.draw(frontBar);
-    window.draw(m_scoreText); window.draw(m_scoreText);
+    window.draw(m_scoreText);
 }

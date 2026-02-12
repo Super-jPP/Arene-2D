@@ -1,23 +1,29 @@
 #pragma once
+
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "math/Vec2.h"
 #include "Enemy.h"
 
-class Weapons {
+class Weapons
+{
 public:
     Weapons();
-    // Crée un ou plusieurs projectiles selon l'arme
+
+    // Basic sword swing (kept for compatibility)
     void swingSword(const Vec2& playerPos, bool facingLeft, std::vector<Enemy>& enemies);
+
+    // Explicit hitbox (used for multi-hit slashes: frame 2 + frame 7)
+    // - range: radius of the hit circle
+    // - forwardOffset: how far in front of the player the hit circle center is placed
+    void swingSword(const Vec2& playerPos, bool facingLeft, std::vector<Enemy>& enemies, float range, float forwardOffset);
 
     void update(float dt);
     void draw(sf::RenderWindow& window);
 
 private:
-
-    float m_range;      // Portée de l'épée
-    float m_damage;     // Dégâts
-    float m_knockback;  // Force de recul
+    float m_range;      // PortÃ©e de l'Ã©pÃ©e
+    float m_damage;     // DÃ©gÃ¢ts
 
     // Pour le debug visuel de la zone d'attaque
     sf::CircleShape m_debugHitzone;

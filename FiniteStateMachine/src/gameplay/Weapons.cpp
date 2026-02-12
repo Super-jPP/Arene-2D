@@ -1,10 +1,10 @@
 #include "gameplay/Weapons.h"
+
 #include <cmath>
 
 Weapons::Weapons()
     : m_range(60.f)
-    , m_damage(10.f)
-    , m_knockback(50.f)
+    , m_damage(1.f)
     , m_debugTimer(0.f)
 {
     // Setup du cercle de debug (optionnel)
@@ -13,33 +13,44 @@ Weapons::Weapons()
     m_debugHitzone.setFillColor(sf::Color(255, 0, 0, 50));
 }
 
-void Weapons::swingSword(const Vec2& playerPos, bool facingLeft, std::vector<Enemy>& enemies) {
-    m_debugTimer = 0.1f; // Affiche la zone rouge brièvement
-    m_debugHitzone.setPosition({ playerPos.x, playerPos.y });
+void Weapons::swingSword(const Vec2& playerPos, bool facingLeft, std::vector<Enemy>& enemies)
+{
+    swingSword(playerPos, facingLeft, enemies, m_range, 40.f);
+}
 
-    for (auto& enemy : enemies) {
-        Vec2 toEnemy = enemy.getPos() - playerPos;
-        float dist = std::sqrt(toEnemy.x * toEnemy.x + toEnemy.y * toEnemy.y);
+void Weapons::swingSword(const Vec2& playerPos, bool facingLeft, std::vector<Enemy>& enemies, float range, float forwardOffset)
+{
+    // Debug circle
+    m_debugTimer = 0.10f;
+    m_debugHitzone.setRadius(range);
+    m_debugHitzone.setOrigin({ range, range });
 
-        if (dist <= m_range) {
-            // Vérification de la direction (le joueur regarde-t-il l'ennemi ?)
-            bool enemyIsLeft = (toEnemy.x < 0);
+    const float dir = facingLeft ? -1.f : 1.f;
+    const Vec2 center{ playerPos.x + dir * forwardOffset, playerPos.y };
+    m_debugHitzone.setPosition({ center.x, center.y });
 
-            if (facingLeft == enemyIsLeft) {
-                // L'ennemi est touché !
-                // enemy.takeDamage(m_damage); 
-                // enemy.applyKnockback(toEnemy.normalized() * m_knockback);
-            }
+    for (auto& enemy : enemies)
+    {
+        if (enemy.isDead()) continue;
+
+        const Vec2 d = enemy.getPos() - center;
+        const float distSq = d.x * d.x + d.y * d.y;
+
+        if (distSq <= range * range)
+        {
+            // Damage once per swing call (GameScene controls 2-phase timing)
+            enemy.takeDamage(static_cast<int>(m_damage));
         }
     }
 }
 
-void Weapons::update(float dt) {
-    if (m_debugTimer > 0) m_debugTimer -= dt;
+void Weapons::update(float dt)
+{
+    if (m_debugTimer > 0.f) m_debugTimer -= dt;
 }
 
-void Weapons::draw(sf::RenderWindow& window) {
-    if (m_debugTimer > 0) {
+void Weapons::draw(sf::RenderWindow& window)
+{
+    if (m_debugTimer > 0.f)
         window.draw(m_debugHitzone);
-    }
 }
