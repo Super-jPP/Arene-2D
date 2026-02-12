@@ -19,6 +19,15 @@ Enemy::Enemy(const Vec2& pos, float speed, float detectRadius, float attackRange
     m_pos = pos;
     m_kind = kind;
 
+    if (m_kind == EnemyKind::Green)
+    {
+        m_hp = 20; // Le Vert est un "Tank", difficile à tuer
+    }
+    else
+    {
+        m_hp = 3;  // Le Bleu est fragile (standard)
+    }
+
     // Init per-enemy RNG with a simple hash of position + kind.
     // (Deterministic but "random enough" for gameplay.)
     const std::uint32_t px = static_cast<std::uint32_t>(std::fabs(pos.x) * 1000.f);

@@ -85,17 +85,27 @@ void Spawner::update(float dt, const Vec2& playerPos, const sf::View& cameraView
 
         const Vec2 pos = randomOutsideView(cameraView, playerPos);
 
-        // Stats (VS-like)
-        const float speed = randf(80.f, 130.f);
+        // 1. On choisit le type au hasard (50/50)
+        const EnemyKind kind = (randf(0.f, 1.f) < 0.5f) ? EnemyKind::Blue : EnemyKind::Green;
 
-        // Detect radius: keep it reasonable so enemies actually spend time in Idle/Wander
-        // before noticing the player (FSM states become observable).
+        // 2. On définit la VITESSE selon le type
+        float speed = 0.f;
+
+        if (kind == EnemyKind::Blue) {
+            // Bleu : Rapide et agile
+            speed = randf(110.f, 150.f);
+        }
+        else {
+            // Vert : Lent (mais ce sera le "tank")
+            speed = randf(50.f, 70.f);
+        }
+
+        // Stats constantes pour l'instant (détection, portée...)
         const float detect = 450.f;
-        const float range  = 60.f;
-        const float cd     = randf(0.6f, 1.0f);
+        const float range = 60.f;
+        const float cd = randf(0.6f, 1.0f);
 
-                const EnemyKind kind = (randf(0.f, 1.f) < 0.5f) ? EnemyKind::Blue : EnemyKind::Green;
-
+        // 3. On crée l'ennemi avec la vitesse choisie
         m_enemies.emplace_back(pos, speed, detect, range, cd, kind);
     }
 
