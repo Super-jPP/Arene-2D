@@ -45,40 +45,40 @@ Dans le build jouable, le personnage possède uniquement une épée pour attaque
 
 **SCHEMA DE LA FSM**
 
-    Chase --> Attack: inRange AND attackReady
-    Attack --> Chase: recoveryDone
+```mermaid
+ Chaser (Bat),
+stateDiagram-v2
+direction LR
 
-    Chase --> Dead: hpZero
-    Attack --> Dead: hpZero
+[*] --> Chase: spawn Chaser
 
-    state Attack {
-        [*] --> Windup
-        Windup --> Active: windupDone
-        Active --> Recovery: activeDone
-        Recovery --> [*]: recoveryDone
-    }
- ```
-    [*] --> Idle: spawn Wanderer
+Chase --> Attack: inRange && attackReady
+Attack --> Chase: recoveryDone
 
-    Idle --> Chase: targetDetected
-    Idle --> Wander: idleDone
+Chase --> Dead: hpZero
+Attack --> Dead: hpZero
 
-    Wander --> Chase: targetDetected
-    Wander --> Idle: idleTrigger
+state Attack {
+    [*] --> Windup
+    Windup --> Active: windupDone
+    Active --> Recovery: activeDone
+    Recovery --> [*]: recoveryDone
+}
+```
+## sources assets:
 
-    Chase --> Wander: targetLost
-    Chase --> Attack: inRange AND attackReady
+ https://legnops.itch.io/red-hood-character
+itch.io
+Red hood pixel character by Legnops
+Free smooth pixel character
 
-    Attack --> Chase: attackDone
 
-    Idle --> Dead: hpZero
-    Wander --> Dead: hpZero
-    Chase --> Dead: hpZero
-    Attack --> Dead: hpZero
+https://luizmelo.itch.io/monsters-creatures-fantasy
+itch.io
+Monsters Creatures Fantasy by LuizMelo
 
-    state Attack {
-        [*] --> Windup
-        Windup --> Active: windupDone
-        Active --> Recovery: activeDone
-        Recovery --> [*]: recoveryDone
-    }
+
+https://flowfrog101.itch.io/free-bat-enemy-spritesheet
+itch.io
+Free Bat-Enemy Spritesheet by FlowFrog101
+Top down animated sprite
