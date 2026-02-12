@@ -29,41 +29,17 @@
       <UniqueIdentifier>{D26470D1-87EC-4F41-8C90-2DEB918F60D4}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\test">
-      <UniqueIdentifier>{D3F7BA82-00D0-4899-9CCB-FA26BF798C57}</UniqueIdentifier>
+      <UniqueIdentifier>{eb0f4da5-3042-4722-bf9a-609f03710626}</UniqueIdentifier>
     </Filter>
-</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\Config.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\Game.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Random.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Scene\GameScene.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\Time.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ecs\EntityId.cpp">
-      <Filter>src\ecs</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ecs\World.cpp">
-      <Filter>src\ecs</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameplay\Damage.cpp">
-      <Filter>src\gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameplay\Entity.cpp">
-      <Filter>src\gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="src\gameplay\Player.cpp">
-      <Filter>src\gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameplay\Stats.cpp">
       <Filter>src\gameplay</Filter>
     </ClCompile>
     <ClCompile Include="src\gameplay\Weapons.cpp">
@@ -78,9 +54,6 @@
     <ClCompile Include="src\math\Vec2.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
-    <ClCompile Include="src\render\SpriteComponent.cpp">
-      <Filter>src\render</Filter>
-    </ClCompile>
     <ClCompile Include="src\render\Animator.cpp">
       <Filter>src\render</Filter>
     </ClCompile>
@@ -90,9 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ai\AttackTypes.hpp">
-      <Filter>src\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ai\contracts\EnemyOwnerConcept.hpp">
       <Filter>src\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\EnemyStateId.hpp">
@@ -128,20 +98,11 @@
     <ClInclude Include="src\core\Game.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Random.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\Scene\GameScene.h">
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Scene\Scene.h">
       <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Time.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ecs\EntityId.h">
-      <Filter>src\ecs</Filter>
     </ClInclude>
     <ClInclude Include="src\ecs\World.h">
       <Filter>src\ecs</Filter>
@@ -150,9 +111,6 @@
       <Filter>src\gameplay</Filter>
     </ClInclude>
     <ClInclude Include="src\gameplay\Enemy.h">
-      <Filter>src\gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameplay\Entity.h">
       <Filter>src\gameplay</Filter>
     </ClInclude>
     <ClInclude Include="src\gameplay\Obstacles.h">
@@ -164,9 +122,6 @@
     <ClInclude Include="src\gameplay\Spawner.h">
       <Filter>src\gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameplay\Stats.h">
-      <Filter>src\gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="src\gameplay\Weapons.h">
       <Filter>src\gameplay</Filter>
     </ClInclude>
@@ -176,16 +131,7 @@
     <ClInclude Include="src\math\Vec2.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="src\render\Camera.h">
-      <Filter>src\render</Filter>
-    </ClInclude>
-    <ClInclude Include="src\render\DebugDraw.h">
-      <Filter>src\render</Filter>
-    </ClInclude>
     <ClInclude Include="src\render\Renderer.h">
-      <Filter>src\render</Filter>
-    </ClInclude>
-    <ClInclude Include="src\render\SpriteComponent.h">
       <Filter>src\render</Filter>
     </ClInclude>
     <ClInclude Include="src\render\Animator.h">
@@ -203,13 +149,13 @@
       <Filter>docs</Filter>
     </None>
     <ClCompile Include="src\gameplay\Enemy.cpp">
-    <Filter>src\gameplay</Filter>
-  </ClCompile>
-  <ClCompile Include="src\gameplay\Spawner.cpp">
-    <Filter>src\gameplay</Filter>
-  </ClCompile>
+      <Filter>src\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameplay\Spawner.cpp">
+      <Filter>src\gameplay</Filter>
+    </ClCompile>
     <ClCompile Include="src\gameplay\Obstacles.cpp">
       <Filter>src\gameplay</Filter>
     </ClCompile>
-</ItemGroup>
+  </ItemGroup>
 </Project>
