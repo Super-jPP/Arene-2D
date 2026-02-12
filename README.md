@@ -31,7 +31,9 @@ Une version  **release**  du jeu est disponible au téléchargement sous forme d
     
 -   **Quitter** : Fermer la fenêtre
 
+## Bugs connus
 
+Les sprites des chauve-souris ne fonctionnent pas parfaitement. Au lieu d'afficher un par un les sprites, le jeu affiche tout les différents sprite en une fois. 
 
 ## Contributeurs
 
