@@ -65,7 +65,7 @@ state Attack {
     Recovery --> [*]: recoveryDone
 }
 ```
-## sources assets:
+**SOURCE ASSET**
 
  https://legnops.itch.io/red-hood-character
 itch.io
