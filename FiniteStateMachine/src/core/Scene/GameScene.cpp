@@ -7,6 +7,7 @@
 
 GameScene::GameScene() 
     : m_scoreText(m_font)
+    , m_gameOverText(m_font)
 {
     // Camera 1920x1080
     m_camera.setSize({ 1920.f, 1080.f });
@@ -48,10 +49,20 @@ GameScene::GameScene()
     m_scoreText.setFillColor(sf::Color::White);
     m_scoreText.setPosition(sf::Vector2f(20.f, 50.f)); // Juste sous la barre de vie
     m_scoreText.setString("Score: 0");
+
+    m_gameOverText.setCharacterSize(80); // Texte en gros
+    m_gameOverText.setFillColor(sf::Color::Red);
+    m_gameOverText.setOutlineColor(sf::Color::White);
+    m_gameOverText.setOutlineThickness(4.f);
 }
 
 void GameScene::update(float dt, sf::RenderWindow& window)
 {
+    if (m_isGameOver)
+    {
+        return; // Le jeu ne se met plus à jour -> effet "Pause / Fige"
+    }
+
     // --- Keyboard input (SFML direct)
     Vec2 moveDir{ 0.f, 0.f };
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W)) moveDir.y -= 1.f;
@@ -127,6 +138,22 @@ void GameScene::update(float dt, sf::RenderWindow& window)
         printf("GAME OVER\n");
     }
 
+    if (m_player.isDead())
+    {
+        m_isGameOver = true; // Active le mode Game Over
+
+        // On prépare le texte
+        m_gameOverText.setString("GAME OVER\nSCORE: " + std::to_string(m_score));
+
+        // On centre le texte par rapport à l'écran
+        sf::FloatRect bounds = m_gameOverText.getLocalBounds();
+        m_gameOverText.setOrigin(sf::Vector2f(bounds.size.x / 2.f, bounds.size.y / 2.f));
+
+        // Position au centre de la vue par défaut (écran)
+        sf::Vector2f viewSize = window.getDefaultView().getSize();
+        m_gameOverText.setPosition(sf::Vector2f(viewSize.x / 2.f, viewSize.y / 2.f));
+    }
+
     // --- Camera clamp
     const sf::Vector2f viewSize = m_camera.getSize();
     const sf::Vector2f half = viewSize * 0.5f;
@@ -143,7 +170,6 @@ void GameScene::draw(sf::RenderWindow& window)
 {
     // 1. DESSIN DU MONDE (Vue CamÃ©ra)
     window.setView(m_camera);
-
     window.draw(m_map);
     m_obstacles.draw(window);
     m_spawner.draw(window);
@@ -178,6 +204,17 @@ void GameScene::draw(sf::RenderWindow& window)
     sf::RectangleShape frontBar(sf::Vector2f(barWidth * ratio, barHeight));
     frontBar.setPosition(sf::Vector2f(paddingX, paddingY));
     frontBar.setFillColor(sf::Color::Red);
+
+    if (m_isGameOver)
+    {
+        // Optionnel : un fond sombre transparent pour mieux lire
+        sf::RectangleShape dim(window.getDefaultView().getSize());
+        dim.setFillColor(sf::Color(0, 0, 0, 150));
+        window.draw(dim);
+
+        // Affiche le gros texte
+        window.draw(m_gameOverText);
+    }
 
     // Dessin
     window.draw(backBar);
