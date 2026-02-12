@@ -7,31 +7,74 @@ Des hordes rempli de squelettes et de chauve-souris vous attaqueront sans cesse.
 Dans ce Horde Survivor, le but est de battre le plus de monstres possible afin d'obtenir le plus grand score. 
 Il vous faudra réussir à optimiser vos déplacements et bien gérer la distance de vos attaques pour rester en vie. La fin est proche pour vous… Mais combien de monstres emporterez vous dans la tombe ? 
 
-**FONCTIONNALITES REALISEES**
+✅ FONCTIONNALITÉS RÉALISÉES
 
-Nous avons réussi à créer un système qui ajoute deux différents types d'ennemis à l'infini, un rapide mais avec peu de vie, et l'autre plus lent mais avec plus de vie. La différence la plus marquante est surtout dans leur façon d'agir, l'un attaque le joueur avec certaines conditions alors que l'autre chasse le joueur directement sans interruption.
+Nous avons développé un système permettant de générer à l’infini deux types d’ennemis :
 
-Grâce à la FSM, nous avons implémenter dans le fonctionnement des ennemis un état "idle", un état "wander", un état "chase", un état "attack" et un état "dead".
-Tout ces états ont leur propre conditions de changements.
+Un ennemi rapide mais fragile (Chaser / Chauve-souris)
 
--ETAT IDLE : (squelette)
-	- état neutre qui sert au squelette à faire une animation d'asset pour fluidifié le mouvement. Il se lance parfois pendant l'"état wander".
+Un ennemi plus lent mais plus résistant (Wanderer / Squelette)
 
--ETAT WANDER : (squelette)
-	-Possède une zone de détection autour de lui. 
-	-Si la hitbox du joueur rentre dedans, alors il passe en "état chase".
+La différence principale entre eux réside dans leur comportement.
 
--ETAT CHASE : (squelette)
-	-Possède deux zones autour de lui. 
-	-La première zone prend les coordonnées du joueur pour que l'ennemi se rapproche le plus possible de lui. Si le joueur sors de cette zone, alors retour en "état wander".
-	-La deuxième est très proche de l'ennemi, et lui permet de passer en "état attack".
-	-POUR LA CHAUVE-SOURIS, qu'importe les coordonnées du joueur, elle sera toujours dès le début en "état chase". Elle ne possède donc que la zone de transition vers l'"état attack".
+Grâce à une Finite State Machine (FSM), les ennemis disposent des états suivants :
 
--ETAT ATTACK : (squelette et chauve-souris)
-	-Cet état permet à l'ennemi de faire perdre des points de vie au joueur. Il continuera de le faire tant que le joueur ne décide pas de s'écarter de lui. 
+Idle
 
--ETAT DEAD : (squelette et chauve-souris)
-	-Cet état permet à l'ennemi de disparaitre de l'écran ainsi que de le supprimer de la mémoire pour faire apparaitre d'autres ennemis, car il y a un nombre maximum d'ennemis possible dans le jeu en même temps.
+Wander
+
+Chase
+
+Attack
+
+Dead
+
+Chaque état possède ses propres conditions de transition.
+
+🔹 ÉTAT IDLE
+
+État neutre
+
+L’entité reste immobile
+
+🔹 ÉTAT WANDER
+
+Déplacement aléatoire
+
+Possède une zone de détection
+
+Si le joueur entre dans cette zone → transition vers Chase
+
+🔹 ÉTAT CHASE
+
+L’ennemi poursuit le joueur
+
+Si le joueur sort du rayon de poursuite → retour en Wander
+
+Si le joueur entre dans le rayon d’attaque → transition vers Attack
+
+⚠️ Cas particulier :
+La Chauve-souris (Chaser) commence directement en Chase et ne possède pas d’état Idle ou Wander.
+
+🔹 ÉTAT ATTACK
+
+Permet d’infliger des dégâts au joueur
+
+Composé de trois sous-états :
+
+Windup (préparation)
+
+Active (attaque effective)
+
+Recovery (temps de récupération)
+
+🔹 ÉTAT DEAD
+
+Supprime l’ennemi de l’écran
+
+Libère sa mémoire
+
+Permet le respawn d’autres ennemis (nombre maximum simultané limité)
 
 
 **FONCTIONNALITES NON REALISES**
@@ -45,8 +88,9 @@ Dans le build jouable, le personnage possède uniquement une épée pour attaque
 
 **SCHEMA DE LA FSM**
 
+## 👹 Chaser (Bat)
+
 ```mermaid
- Chaser (Bat),
 stateDiagram-v2
 direction LR
 
@@ -55,6 +99,37 @@ direction LR
 Chase --> Attack: inRange && attackReady
 Attack --> Chase: recoveryDone
 
+Chase --> Dead: hpZero
+Attack --> Dead: hpZero
+
+state Attack {
+    [*] --> Windup
+    Windup --> Active: windupDone
+    Active --> Recovery: activeDone
+    Recovery --> [*]: recoveryDone
+}
+```
+## 🌲 Wanderer (Green / Blue)
+
+```mermaid
+stateDiagram-v2
+direction LR
+
+[*] --> Idle: spawn Wanderer
+
+Idle --> Chase: targetDetected
+Idle --> Wander: idleDone
+
+Wander --> Chase: targetDetected
+Wander --> Idle: idleTrigger
+
+Chase --> Wander: targetLost
+Chase --> Attack: inRange && attackReady
+
+Attack --> Chase: attackDone
+
+Idle --> Dead: hpZero
+Wander --> Dead: hpZero
 Chase --> Dead: hpZero
 Attack --> Dead: hpZero
 
