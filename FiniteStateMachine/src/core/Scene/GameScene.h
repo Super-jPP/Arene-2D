@@ -36,4 +36,7 @@ private:
     int m_score = 0;
     sf::Font m_font;
     sf::Text m_scoreText;
+
+    bool m_isGameOver = false;
+    sf::Text m_gameOverText;
 };
