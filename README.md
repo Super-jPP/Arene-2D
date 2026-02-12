@@ -27,7 +27,7 @@ Une version  **release**  du jeu est disponible au téléchargement sous forme d
 
 -   **Déplacement** : `Z` `Q` `S` `D` 
     
--   **Attaquer** : `Espace` (ou Clic Gauche)
+-   **Attaquer** : Automatique
     
 -   **Quitter** : Fermer la fenêtre
 
